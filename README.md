@@ -22,9 +22,18 @@ npm run icons      # regenerate the app icons from scripts/make-icons.mjs
 ## Deploying
 
 `.github/workflows/deploy.yml` builds and publishes `dist/` to GitHub Pages on
-every push to `main` and to the current feature branch. Enable it once under
-**Settings → Pages → Source → GitHub Actions**; the site then lives at
+every push to `main`. The site lives at
 `https://randomtestyashish.github.io/Check-list/`, publicly, with no sign-in.
+
+Two repository settings have to agree for a deploy to land, and both are in the
+GitHub UI rather than in this repository:
+
+- **Settings > Pages > Source** must be **GitHub Actions**.
+- **`main` must be the repository's default branch.** The `github-pages`
+  environment only accepts deployments from the default branch, so a push to a
+  non-default branch builds fine and then fails in the `deploy` job before any
+  step runs, with no logs to explain why. If a deploy fails that way, this is
+  almost always the reason.
 
 The base path is `/Check-list/` to match the repository name. Hosting at a domain
 root instead:
