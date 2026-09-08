@@ -11,11 +11,13 @@ export function useBook() {
   const [checked, setChecked] = useState<Set<string>>(() => new Set(initial?.checked ?? []))
   const [chapter, setChapter] = useState(() => clamp(initial?.chapter ?? 0, 0, chapters.length - 1))
   const [theme, setTheme] = useState<ThemePreference>(() => initial?.theme ?? 'system')
+  const [seenIntro, setSeenIntro] = useState(() => initial?.seenIntro ?? false)
+  const [hasFlipped, setHasFlipped] = useState(() => initial?.hasFlipped ?? false)
 
   // Persist on every change. The payload is tiny, so there is nothing to debounce.
   useEffect(() => {
-    save({ checked: [...checked], chapter, theme })
-  }, [checked, chapter, theme])
+    save({ checked: [...checked], chapter, theme, seenIntro, hasFlipped })
+  }, [checked, chapter, theme, seenIntro, hasFlipped])
 
   useEffect(() => {
     const root = document.documentElement
@@ -76,6 +78,10 @@ export function useBook() {
     totalPercent: percent(totalDone, totalItems),
     theme,
     setTheme,
+    seenIntro,
+    dismissIntro: useCallback(() => setSeenIntro(true), []),
+    hasFlipped,
+    markFlipped: useCallback(() => setHasFlipped(true), []),
   }
 }
 

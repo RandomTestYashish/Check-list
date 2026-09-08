@@ -51,7 +51,8 @@ the book open.
 |---|---|
 | `src/data/checklist.ts` | All content — chapters, items, notes, asides |
 | `src/hooks/useBook.ts` | Ticks, current chapter, theme, progress; persisted to `localStorage` |
-| `src/components/book/PageDeck.tsx` | The mobile book: swipe, page turn, page bodies |
+| `src/components/book/PageDeck.tsx` | The mobile book: swipe, page turn, page bodies, nav |
+| `src/components/book/hints.tsx` | The one-time first-run cue and the swipe hint |
 | `src/components/book/Spread.tsx` | The desktop spread and contents sidebar |
 | `src/components/book/Contents.tsx` | Table of contents, journey progress, theme, reset |
 | `src/components/book/Cover.tsx` | The cover and its opening transition |
@@ -81,11 +82,21 @@ runtime dependency on a font CDN.
 
 ### The page turn
 
-A swipe writes one custom property — `--pos` on the track — straight to the DOM,
-so dragging a page never re-renders React and never blocks a tick. The gesture
-locks to an axis after 10px, so a vertical scroll and a horizontal page turn never
-fight each other, and the page follows the finger, with the text trailing slightly
-behind the page edge the way paper lifts off a spine.
+Pages are hinged at the spine and rotate in 3D — a fold, not a slide. One custom
+property drives it: `--turn` on the stage, `0` at rest, `+1` fully turned forward,
+`-1` fully turned back. It is written straight to the DOM during a drag, so
+following a finger never re-renders React and never delays a tick.
+
+The leaf swings to just past edge-on rather than a full 180°. Past 90° a page
+hinged at the spine is off-screen, and half a turn spent looking at nothing reads
+as a stall rather than as paper, so it fades out over the last of the sweep
+instead.
+
+The gesture locks to an axis after 10px and vertical wins ties, so scrolling the
+list never costs a page; a turn completes on 26% of the page width or a flick that
+covers at least 8%. Tapping Back or Next runs the same turn, and a turn already
+in flight is committed on the spot when a new one starts, so rapid swipes chain
+instead of fighting. Jumping from the contents skips the turn and fades in.
 
 Checking an item is always immediate: no animation gates it, taps land while a
 page is still settling, and `prefers-reduced-motion` swaps every transition for an

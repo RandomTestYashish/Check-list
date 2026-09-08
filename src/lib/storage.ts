@@ -5,11 +5,21 @@ export type Persisted = {
   checked: string[]
   chapter: number
   theme: ThemePreference
+  /** The first-run cue is shown once, then never again. */
+  seenIntro: boolean
+  /** The swipe hint retires as soon as a page has actually been turned. */
+  hasFlipped: boolean
 }
 
 export type ThemePreference = 'light' | 'dark' | 'system'
 
-const empty: Persisted = { checked: [], chapter: 0, theme: 'system' }
+const empty: Persisted = {
+  checked: [],
+  chapter: 0,
+  theme: 'system',
+  seenIntro: false,
+  hasFlipped: false,
+}
 
 export function load(): Persisted {
   try {
@@ -23,6 +33,8 @@ export function load(): Persisted {
         parsed.theme === 'light' || parsed.theme === 'dark' || parsed.theme === 'system'
           ? parsed.theme
           : 'system',
+      seenIntro: parsed.seenIntro === true,
+      hasFlipped: parsed.hasFlipped === true,
     }
   } catch {
     // Private mode, disabled storage, corrupt JSON — the book still works, it

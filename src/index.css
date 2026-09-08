@@ -175,47 +175,157 @@
 }
 
 /* ------------------------------------------------------------------
-   Book motion
-   The page deck is driven by one custom property, --pos, written
-   straight to the DOM during a drag so a swipe never re-renders React.
+   The page turn
+   One leaf is hinged at the spine and rotates. A single custom property,
+   --turn, drives it: 0 at rest, +1 fully turned forward, -1 fully turned
+   back. It is written straight to the DOM during a drag, so following a
+   finger never re-renders React and never delays a tick.
    ------------------------------------------------------------------ */
 
-.book-track {
-  --pos: 0;
-  transform: translate3d(calc(var(--pos) * -100%), 0, 0);
-  transition: transform 380ms var(--ease-page);
+.book-stage {
+  --turn: 0;
+  position: relative;
+  perspective: 1800px;
+  perspective-origin: 50% 42%;
+  overflow: hidden;
+}
+
+.leaf {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition:
+    transform 480ms cubic-bezier(0.33, 0.02, 0.15, 1),
+    opacity 480ms cubic-bezier(0.33, 0.02, 0.15, 1);
   will-change: transform;
 }
 
-.book-track[data-dragging='true'] {
+/* Following a finger, and resetting after a turn, both happen with the
+   transition off. */
+.book-stage[data-dragging='true'] .leaf,
+.book-stage[data-instant='true'] .leaf {
   transition: none;
 }
 
-.book-page {
-  /* Content trails the page slightly, the way paper lifts off the spine. */
-  --lead: calc((var(--i) - var(--pos)) * 9%);
-  box-shadow: inset 12px 0 20px -18px rgb(0 0 0 / 0.35);
+/* Turning away from the light, and lying under the leaf coming back. */
+.leaf[data-state='current'] .leaf-shade {
+  opacity: calc(max(var(--turn), 0) * 0.4 + min(var(--turn), 0) * -0.18);
 }
 
-.book-page-inner {
-  transform: translate3d(var(--lead), 0, 0);
-  transition: transform 380ms var(--ease-page);
+/* The leaf swings to just past edge-on rather than the full 180°: beyond
+   90° a page hinged at the spine is off-screen, and half a turn spent
+   looking at nothing reads as a stall rather than as paper. It fades out
+   over the last of the sweep so it never pops. */
+.leaf[data-state='current'] {
+  z-index: 2;
+  transform: rotateY(calc(max(var(--turn), 0) * -105deg));
+  opacity: clamp(0, calc((1 - max(var(--turn), 0)) * 6), 1);
 }
 
-.book-track[data-dragging='true'] .book-page-inner {
-  transition: none;
+.leaf[data-state='previous'] {
+  z-index: 3;
+  transform: rotateY(calc((1 + min(var(--turn), 0)) * -105deg));
+  opacity: clamp(0, calc(min(var(--turn), 0) * -6), 1);
 }
 
-/* Reduced motion: pages change instantly, nothing slides. */
-.book-track[data-reduced='true'],
-.book-track[data-reduced='true'] .book-page-inner {
-  transition: none;
+.leaf[data-state='next'] {
+  z-index: 1;
 }
 
-.book-track[data-reduced='true'] .book-page-inner {
-  transform: none;
+.leaf[data-state='hidden'] {
+  visibility: hidden;
 }
 
+.leaf-face {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  backface-visibility: hidden;
+  background: var(--card);
+  box-shadow: 0 0 24px -14px rgb(0 0 0 / 0.5);
+}
+
+/* The reverse of the sheet, seen for the second half of a turn. */
+.leaf-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+  background: linear-gradient(to left, var(--card) 82%, color-mix(in oklab, var(--card), var(--foreground) 7%));
+}
+
+/* The page underneath sits in shadow until the leaf above it clears. */
+.leaf[data-state='next'] .leaf-shade {
+  opacity: calc((1 - max(var(--turn), 0)) * 0.16);
+}
+
+.leaf-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(to right, rgb(0 0 0 / 0.55), rgb(0 0 0 / 0.1) 45%, transparent);
+}
+
+/* The hint sits on the stage, not on the leaf, so it stands still while a
+   page moves. Take it out of the way for the duration of a drag. */
+.book-stage[data-dragging='true'] .book-hint {
+  opacity: 0;
+}
+
+/* Arriving from the contents jumps rather than turns; a short fade keeps it
+   from reading as a glitch. */
+@keyframes leaf-arrive {
+  from {
+    opacity: 0;
+  }
+}
+
+.book-stage[data-jump='true'] .leaf[data-state='current'] .leaf-face {
+  animation: leaf-arrive 220ms var(--ease-page) both;
+}
+
+/* The edge of the pages still to come. */
+.page-edges-decor {
+  position: absolute;
+  inset-block: 1.25rem;
+  right: 0;
+  z-index: 0;
+  width: 5px;
+  border-left: 1px solid var(--border);
+  background: repeating-linear-gradient(
+    to right,
+    var(--card) 0 2px,
+    var(--border) 2px 3px
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leaf {
+    transition: none;
+  }
+}
+
+/* The swipe hint drifts, just enough to read as a gesture. */
+@keyframes hint-drift {
+  0%,
+  100% {
+    transform: translateX(3px);
+  }
+  50% {
+    transform: translateX(-3px);
+  }
+}
+
+.hint-drift {
+  display: inline-block;
+  animation: hint-drift 1.8s ease-in-out infinite;
+}
+
+/* Opening the cover, and moving between chapters on the desktop spread. */
 @keyframes book-open {
   from {
     opacity: 0;
@@ -251,6 +361,18 @@
 
 .book-fade[data-direction='back'] {
   animation: page-fade-back 260ms var(--ease-page) both;
+}
+
+/* The finish, once every item is ticked. */
+@keyframes finale-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+}
+
+.book-finale {
+  animation: finale-in 420ms var(--ease-page) both;
 }
 
 /* A phone held sideways has very little height to spend on a chapter opening. */

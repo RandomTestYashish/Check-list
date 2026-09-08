@@ -23,7 +23,9 @@ export function Contents({
 }) {
   return (
     <div className={cn('flex h-full min-h-0 flex-col', className)}>
-      <p className="u-kicker text-muted-foreground px-6 pt-6 pb-4 md:px-8">Contents</p>
+      <p className="u-kicker text-muted-foreground flex items-center gap-2 px-6 pt-6 pb-4 md:px-8">
+        <span aria-hidden>📚</span> Contents
+      </p>
 
       <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 md:px-6">
         <ul>
@@ -50,6 +52,9 @@ export function Contents({
                   >
                     {chapter.number}
                   </span>
+                  <span className="shrink-0 text-sm" aria-hidden>
+                    {chapter.emoji}
+                  </span>
                   <span
                     className={cn(
                       'truncate text-sm',
@@ -61,11 +66,12 @@ export function Contents({
                   <span className="u-leader" aria-hidden />
                   <span
                     className={cn(
-                      'u-kicker u-numeral shrink-0',
+                      'u-kicker u-numeral flex shrink-0 items-center gap-1',
                       complete ? 'text-brand' : 'text-muted-foreground',
                     )}
                   >
-                    {complete ? <CheckIcon className="size-3.5" /> : `${p?.percent ?? 0}%`}
+                    {p?.done ?? 0} / {p?.total ?? 0}
+                    {complete && <CheckIcon className="size-3.5" />}
                   </span>
                 </button>
               </li>

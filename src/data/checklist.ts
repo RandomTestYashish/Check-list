@@ -11,6 +11,8 @@ export type Chapter = {
   /** Two-digit chapter number, e.g. "01". */
   number: string
   title: string
+  /** Quick visual identifier for the chapter, used wherever it's listed. */
+  emoji: string
   /** One line of editorial context under the chapter title. */
   subtitle: string
   /** A short aside, printed in the margin of the page. */
@@ -31,6 +33,7 @@ export const chapters: Chapter[] = [
     id: 'essentials',
     number: '01',
     title: 'Essentials',
+    emoji: '🛂',
     subtitle: 'The papers that decide whether the trip happens at all.',
     tip: 'If you check one thing today, check the expiry date on the passport.',
     items: [
@@ -50,6 +53,7 @@ export const chapters: Chapter[] = [
     id: 'clothes',
     number: '02',
     title: 'Clothes',
+    emoji: '👕',
     subtitle: 'Keep it light. Singapore is hot and humid.',
     tip: 'Two of everything is plenty. There is a laundry on every block.',
     items: [
@@ -73,6 +77,7 @@ export const chapters: Chapter[] = [
     id: 'toiletries',
     number: '03',
     title: 'Toiletries',
+    emoji: '🧴',
     subtitle: 'Anything over 100ml goes in the hold, not the cabin.',
     tip: 'Hotels cover the basics. Pack only what you are fussy about.',
     items: [
@@ -96,6 +101,7 @@ export const chapters: Chapter[] = [
     id: 'health',
     number: '04',
     title: 'Health',
+    emoji: '💊',
     subtitle: 'A small kit that saves an afternoon of your trip.',
     tip: 'Pharmacies here are excellent — though not at 2am on Pulau Ubin.',
     items: [
@@ -117,6 +123,7 @@ export const chapters: Chapter[] = [
     id: 'electronics',
     number: '05',
     title: 'Electronics',
+    emoji: '📱',
     subtitle: 'Type G sockets, 230V. Bring the right adapter.',
     tip: 'The adapter is the one thing you cannot improvise at midnight.',
     items: [
@@ -136,6 +143,7 @@ export const chapters: Chapter[] = [
     id: 'money',
     number: '06',
     title: 'Money',
+    emoji: '💳',
     subtitle: 'Cards work almost everywhere. Almost.',
     tip: 'A little cash for the older stalls, a card for everything else.',
     items: [
@@ -153,6 +161,7 @@ export const chapters: Chapter[] = [
     id: 'before-flight',
     number: '07',
     title: 'Before Flight',
+    emoji: '✈️',
     subtitle: 'The last twenty-four hours, in order.',
     tip: 'Do all of this the night before. Mornings lie to you about time.',
     items: [
@@ -172,6 +181,7 @@ export const chapters: Chapter[] = [
     id: 'weather',
     number: '08',
     title: 'Weather',
+    emoji: '🌦️',
     subtitle: '26–34°C, humid, with a thunderstorm most afternoons.',
     tip: 'The rain is warm, heavy and brief. Plan around it, not for it.',
     items: [
@@ -188,6 +198,7 @@ export const chapters: Chapter[] = [
     id: 'activities',
     number: '09',
     title: 'Activities',
+    emoji: '🏝️',
     subtitle: 'Book the timed ones now. Wander the rest.',
     tip: 'Two a day is the honest limit. The heat wins the third one.',
     items: [
@@ -208,6 +219,7 @@ export const chapters: Chapter[] = [
     id: 'before-leaving',
     number: '10',
     title: 'Before Leaving Home',
+    emoji: '🏠',
     subtitle: 'The walk-through you do with your coat already on.',
     tip: 'Walk through the house once more with this page open.',
     items: [

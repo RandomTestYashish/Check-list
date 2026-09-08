@@ -4,7 +4,6 @@ import { useBook } from '@/hooks/useBook'
 import { useIsSpread, useReducedMotion } from '@/hooks/useMediaQuery'
 import { Cover } from '@/components/book/Cover'
 import { PageDeck } from '@/components/book/PageDeck'
-import { BookNav } from '@/components/book/BookNav'
 import { Contents } from '@/components/book/Contents'
 import { Spread } from '@/components/book/Spread'
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet'
@@ -32,7 +31,7 @@ export default function App() {
 
   // Arrow keys turn pages, as long as the reader isn't typing or in a dialog.
   useEffect(() => {
-    if (coverVisible || contentsOpen) return
+    if (coverVisible || contentsOpen || !isSpread) return
     const onKey = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null
       if (target?.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target?.tagName ?? '')) return
@@ -42,7 +41,7 @@ export default function App() {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [book, coverVisible, contentsOpen])
+  }, [book, coverVisible, contentsOpen, isSpread])
 
   const openContents = useCallback(() => setContentsOpen(true), [])
   const selectChapter = useCallback(
@@ -66,10 +65,7 @@ export default function App() {
         {isSpread ? (
           <Spread book={book} onOpenContents={openContents} />
         ) : (
-          <>
-            <PageDeck book={book} />
-            <BookNav book={book} onOpenContents={openContents} />
-          </>
+          <PageDeck book={book} onOpenContents={openContents} />
         )}
       </div>
 

@@ -40,7 +40,10 @@ export function ChapterHeading({
         <Separator className="flex-1" />
       </div>
 
-      <h2 className="u-display text-card-foreground text-[clamp(1.75rem,7.5vw,2.5rem)] leading-[1.05] tracking-[0.01em] uppercase">
+      <h2 className="u-display text-card-foreground flex items-baseline gap-2.5 text-[clamp(1.625rem,7vw,2.5rem)] leading-[1.05] tracking-[0.01em] uppercase">
+        <span className="shrink-0 text-[0.8em]" aria-hidden>
+          {chapter.emoji}
+        </span>
         {chapter.title}
       </h2>
 
@@ -107,26 +110,14 @@ export function MarginNote({ children, className }: { children: string; classNam
   )
 }
 
-export function PageFolio({
-  index,
-  className,
-  hint,
-}: {
-  index: number
-  className?: string
-  hint?: string
-}) {
+export function PageFolio({ index, className }: { index: number; className?: string }) {
   return (
-    <div
-      className={cn(
-        'u-kicker text-muted-foreground flex items-center justify-between',
-        className,
-      )}
-    >
-      <span>{hint}</span>
+    <div className={cn('u-kicker text-muted-foreground flex items-center gap-3', className)}>
       <span className="u-numeral">
-        {chapters[index].number} / {String(chapters.length).padStart(2, '0')}
+        Page {chapters[index].number} of {String(chapters.length).padStart(2, '0')}
       </span>
+      <span className="h-px flex-1 bg-border" />
+      <span aria-hidden>{chapters[index].emoji}</span>
     </div>
   )
 }
