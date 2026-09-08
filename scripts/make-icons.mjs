@@ -3,10 +3,10 @@
 import { mkdirSync, writeFileSync } from 'node:fs'
 import sharp from 'sharp'
 
-const INK = '#17140f'
-const PAPER = '#fbf8f3'
-const ACCENT = '#a3222b'
-const RULE = '#cec4b1'
+const INK = '#0c0a09'
+const PAPER = '#ffffff'
+const ACCENT = '#9d2a2c'
+const RULE = '#d6d3d1'
 
 /** @param {{size:number, pageW:number, pageH:number, bleed?:boolean}} opts */
 function artwork({ size, pageW, pageH }) {

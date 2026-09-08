@@ -12,9 +12,9 @@ try {
     preference === 'dark' ||
     ((preference === 'system' || !preference) &&
       window.matchMedia('(prefers-color-scheme: dark)').matches)
-  document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+  document.documentElement.classList.toggle('dark', dark)
 } catch {
-  document.documentElement.dataset.theme = 'light'
+  document.documentElement.classList.remove('dark')
 }
 
 registerSW({ immediate: true })

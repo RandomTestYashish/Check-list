@@ -2,20 +2,22 @@ import type { Chapter } from '@/data/checklist'
 import { chapterUnit, chapters } from '@/data/checklist'
 import type { ChapterProgress } from '@/hooks/useBook'
 import { ChecklistRow } from '@/components/book/ChecklistRow'
+import { Progress } from '@/components/ui/progress'
+import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 
 export function RunningHead({ right, className }: { right: string; className?: string }) {
   return (
     <div
       className={cn(
-        'u-kicker flex items-center justify-between gap-3 text-ink-faint',
+        'u-kicker text-muted-foreground flex items-center justify-between gap-3',
         className,
       )}
     >
       <span className="truncate">
         Singapore<span className="hidden min-[360px]:inline"> · September 2026</span>
       </span>
-      <span>{right}</span>
+      <span className="u-numeral shrink-0">{right}</span>
     </div>
   )
 }
@@ -32,30 +34,29 @@ export function ChapterHeading({
   return (
     <header className={cn('chapter-heading space-y-3', className)}>
       <div className="flex items-center gap-4">
-        <span className="u-display u-numeral text-[2.25rem] leading-none text-accent">
+        <span className="u-display u-numeral text-brand text-4xl leading-none">
           {chapter.number}
         </span>
-        <span className="h-px flex-1 bg-rule" />
+        <Separator className="flex-1" />
       </div>
 
-      <h2 className="u-display text-[clamp(1.75rem,7.5vw,2.5rem)] leading-[1.05] tracking-[0.01em] uppercase text-ink">
+      <h2 className="u-display text-card-foreground text-[clamp(1.75rem,7.5vw,2.5rem)] leading-[1.05] tracking-[0.01em] uppercase">
         {chapter.title}
       </h2>
 
-      <p className="max-w-[36ch] text-[0.875rem] leading-relaxed text-ink-muted">
+      <p className="text-muted-foreground max-w-[38ch] text-sm leading-relaxed">
         {chapter.subtitle}
       </p>
 
       <div className="flex items-center gap-3 pt-1">
-        <span className="u-kicker u-numeral text-ink">
+        <span className="u-kicker u-numeral text-card-foreground shrink-0">
           {progress.done} / {progress.total} {chapterUnit[chapter.id] ?? 'done'}
         </span>
-        <span className="h-px flex-1 bg-rule">
-          <span
-            className="block h-px bg-accent transition-[width] duration-500 ease-page"
-            style={{ width: `${progress.percent}%` }}
-          />
-        </span>
+        <Progress
+          value={progress.percent}
+          indicatorClassName="bg-brand"
+          aria-label={`${chapter.title} progress`}
+        />
       </div>
     </header>
   )
@@ -75,15 +76,12 @@ export function ChapterItems({
   return (
     <ul
       className={cn(
-        'divide-y divide-rule/70',
-        columns && 'divide-y-0 lg:[column-count:2] lg:[column-gap:2.5rem]',
+        'divide-border divide-y',
+        columns && 'divide-y-0 lg:[column-count:2] lg:[column-gap:2rem]',
       )}
     >
       {chapter.items.map((item) => (
-        <li
-          key={item.id}
-          className={cn(columns && 'break-inside-avoid border-b border-rule/70')}
-        >
+        <li key={item.id} className={cn(columns && 'border-border break-inside-avoid border-b')}>
           <ChecklistRow
             item={item}
             checked={isChecked(item.id)}
@@ -100,7 +98,7 @@ export function MarginNote({ children, className }: { children: string; classNam
   return (
     <p
       className={cn(
-        'border-l border-accent/40 pl-4 text-[0.8125rem] leading-relaxed text-ink-muted',
+        'border-brand/40 text-muted-foreground border-l-2 pl-4 text-[0.8125rem] leading-relaxed',
         className,
       )}
     >
@@ -119,7 +117,12 @@ export function PageFolio({
   hint?: string
 }) {
   return (
-    <div className={cn('u-kicker flex items-center justify-between text-ink-faint', className)}>
+    <div
+      className={cn(
+        'u-kicker text-muted-foreground flex items-center justify-between',
+        className,
+      )}
+    >
       <span>{hint}</span>
       <span className="u-numeral">
         {chapters[index].number} / {String(chapters.length).padStart(2, '0')}

@@ -21,11 +21,11 @@ export function useBook() {
     const root = document.documentElement
     const media = window.matchMedia('(prefers-color-scheme: dark)')
     const apply = () => {
-      const resolved = theme === 'system' ? (media.matches ? 'dark' : 'light') : theme
-      root.dataset.theme = resolved
+      const dark = theme === 'system' ? media.matches : theme === 'dark'
+      root.classList.toggle('dark', dark)
       document
         .querySelector('meta[name="theme-color"]')
-        ?.setAttribute('content', resolved === 'dark' ? '#0b0a09' : '#efe9df')
+        ?.setAttribute('content', dark ? '#0c0a09' : '#ffffff')
     }
     apply()
     media.addEventListener('change', apply)

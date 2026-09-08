@@ -7,7 +7,7 @@ import { PageDeck } from '@/components/book/PageDeck'
 import { BookNav } from '@/components/book/BookNav'
 import { Contents } from '@/components/book/Contents'
 import { Spread } from '@/components/book/Spread'
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet'
 
 /** How long the cover takes to lift away. */
 const OPEN_MS = 420
@@ -54,7 +54,7 @@ export default function App() {
   )
 
   return (
-    <div className="flex h-full flex-col bg-desk">
+    <div className="bg-background flex h-full flex-col">
       <div
         className={cn(
           'flex h-full min-h-0 flex-col',
@@ -75,13 +75,12 @@ export default function App() {
 
       {coverVisible && <Cover book={book} opening={opening} onOpen={openBook} />}
 
-      <Dialog open={contentsOpen} onOpenChange={setContentsOpen}>
-        <DialogContent className="book-sheet">
-          <DialogTitle className="sr-only">Contents</DialogTitle>
-          <div className="mx-auto mt-3 h-1 w-10 rounded-full bg-rule-strong sm:hidden" />
-          <Contents book={book} onSelect={selectChapter} className="max-h-[80svh]" />
-        </DialogContent>
-      </Dialog>
+      <Sheet open={contentsOpen} onOpenChange={setContentsOpen}>
+        <SheetContent side={isSpread ? 'left' : 'bottom'} className="gap-0">
+          <SheetTitle className="sr-only">Contents</SheetTitle>
+          <Contents book={book} onSelect={selectChapter} className="max-h-[86svh]" />
+        </SheetContent>
+      </Sheet>
     </div>
   )
 }

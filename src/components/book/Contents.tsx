@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
-import { Check, Monitor, Moon, Sun } from 'lucide-react'
+import { CheckIcon, MonitorIcon, MoonIcon, SunIcon } from 'lucide-react'
 import type { Book } from '@/hooks/useBook'
 import type { ThemePreference } from '@/lib/storage'
 import { JourneyProgress } from '@/components/book/progress-marks'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-const themeOptions: { value: ThemePreference; label: string; icon: typeof Sun }[] = [
-  { value: 'light', label: 'Light', icon: Sun },
-  { value: 'dark', label: 'Dark', icon: Moon },
-  { value: 'system', label: 'System', icon: Monitor },
+const themeOptions: { value: ThemePreference; label: string; icon: typeof SunIcon }[] = [
+  { value: 'light', label: 'Light', icon: SunIcon },
+  { value: 'dark', label: 'Dark', icon: MoonIcon },
+  { value: 'system', label: 'System', icon: MonitorIcon },
 ]
 
 export function Contents({
@@ -22,9 +23,9 @@ export function Contents({
 }) {
   return (
     <div className={cn('flex h-full min-h-0 flex-col', className)}>
-      <div className="u-kicker px-6 pt-6 pb-4 text-ink-faint md:px-8">Contents</div>
+      <p className="u-kicker text-muted-foreground px-6 pt-6 pb-4 md:px-8">Contents</p>
 
-      <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 md:px-8">
+      <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 md:px-6">
         <ul>
           {book.chapters.map((chapter, index) => {
             const p = book.progressByChapter.get(chapter.id)
@@ -37,22 +38,22 @@ export function Contents({
                   onClick={() => onSelect(index)}
                   aria-current={current ? 'page' : undefined}
                   className={cn(
-                    'flex w-full items-baseline gap-1 border-b border-rule/60 py-3.5 text-left transition-colors',
-                    current ? 'text-ink' : 'text-ink-muted hover:text-ink',
+                    'focus-visible:ring-ring/50 flex w-full items-baseline gap-1 rounded-md px-2 py-3 text-left transition-colors outline-none focus-visible:ring-[3px]',
+                    current ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50',
                   )}
                 >
                   <span
                     className={cn(
                       'u-kicker u-numeral w-7 shrink-0',
-                      current ? 'text-accent' : 'text-ink-faint',
+                      current ? 'text-brand' : 'text-muted-foreground',
                     )}
                   >
                     {chapter.number}
                   </span>
                   <span
                     className={cn(
-                      'truncate text-[0.9375rem]',
-                      current && 'u-display text-[1.0625rem]',
+                      'truncate text-sm',
+                      current ? 'text-foreground font-medium' : 'text-foreground/80',
                     )}
                   >
                     {chapter.title}
@@ -60,11 +61,11 @@ export function Contents({
                   <span className="u-leader" aria-hidden />
                   <span
                     className={cn(
-                      'u-kicker u-numeral shrink-0 tabular-nums',
-                      complete ? 'text-accent' : 'text-ink-faint',
+                      'u-kicker u-numeral shrink-0',
+                      complete ? 'text-brand' : 'text-muted-foreground',
                     )}
                   >
-                    {complete ? <Check className="size-3.5" strokeWidth={2.5} /> : `${p?.percent ?? 0}%`}
+                    {complete ? <CheckIcon className="size-3.5" /> : `${p?.percent ?? 0}%`}
                   </span>
                 </button>
               </li>
@@ -73,7 +74,7 @@ export function Contents({
         </ul>
       </nav>
 
-      <div className="space-y-5 border-t border-rule px-6 pt-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] md:px-8">
+      <div className="space-y-5 border-t px-6 pt-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] md:px-8">
         <JourneyProgress
           done={book.totalDone}
           total={book.totalItems}
@@ -97,21 +98,28 @@ function ThemeToggle({
   onChange: (value: ThemePreference) => void
 }) {
   return (
-    <div className="flex items-center gap-0.5 rounded-full border border-rule p-0.5" role="group" aria-label="Theme">
+    <div
+      className="bg-muted flex items-center gap-0.5 rounded-lg p-0.5"
+      role="group"
+      aria-label="Theme"
+    >
       {themeOptions.map(({ value: option, label, icon: Icon }) => (
-        <button
+        <Button
           key={option}
-          type="button"
+          variant="ghost"
+          size="sm"
           onClick={() => onChange(option)}
           aria-label={label}
           aria-pressed={value === option}
           className={cn(
-            'grid size-7 place-items-center rounded-full transition-colors',
-            value === option ? 'bg-ink text-paper' : 'text-ink-faint hover:text-ink',
+            'size-7 px-0',
+            value === option
+              ? 'bg-background text-foreground shadow-xs'
+              : 'text-muted-foreground hover:bg-transparent',
           )}
         >
           <Icon className="size-3.5" />
-        </button>
+        </Button>
       ))}
     </div>
   )
@@ -127,8 +135,9 @@ function ResetButton({ onReset, count }: { onReset: () => void; count: number })
   if (count === 0) return null
 
   return (
-    <button
-      type="button"
+    <Button
+      variant="ghost"
+      size="sm"
       onClick={() => {
         if (armed) {
           onReset()
@@ -140,11 +149,11 @@ function ResetButton({ onReset, count }: { onReset: () => void; count: number })
         }
       }}
       className={cn(
-        'u-kicker rounded-full px-3 py-2 transition-colors',
-        armed ? 'bg-accent-wash text-accent' : 'text-ink-faint hover:text-ink',
+        'u-kicker',
+        armed ? 'text-destructive hover:text-destructive' : 'text-muted-foreground',
       )}
     >
       {armed ? `Clear ${count}? Tap again` : 'Start over'}
-    </button>
+    </Button>
   )
 }

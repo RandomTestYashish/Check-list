@@ -55,12 +55,29 @@ the book open.
 | `src/components/book/Spread.tsx` | The desktop spread and contents sidebar |
 | `src/components/book/Contents.tsx` | Table of contents, journey progress, theme, reset |
 | `src/components/book/Cover.tsx` | The cover and its opening transition |
-| `src/index.css` | Design tokens, typography and the book motion |
+| `src/index.css` | shadcn tokens, typography and the book motion |
+| `src/components/ui/` | shadcn components (button, checkbox, sheet, separator, progress) |
 
-React 19 + TypeScript + Vite + Tailwind CSS v4, with Radix primitives underneath
-the checkbox and the contents sheet. Fraunces and Inter are vendored as latin
-subsets in `src/assets/fonts` (SIL Open Font License), so the book has no runtime
-dependency on a font CDN.
+React 19 + TypeScript + Vite + Tailwind CSS v4.
+
+### Design system
+
+The visual language is [shadcn/ui](https://ui.shadcn.com), new-york style on the
+**stone** base colour, and the project is set up as a real shadcn project —
+`components.json` is present, so `npx shadcn@latest add <component>` drops
+components straight into `src/components/ui`. Everything is drawn with the
+standard tokens (`background`, `card`, `muted-foreground`, `border`, `ring`,
+`--radius`) in both light and dark; `src/index.css` holds them.
+
+One token is added on top: `--brand`, the red that carries chapter numbers,
+chapter progress and the fore-edge marks. It is the only colour in the book that
+isn't stone.
+
+The editorial half is typographic rather than chromatic. Geist sets the interface
+at shadcn's sizes and weights; Fraunces sets display type only — the cover, the
+chapter numbers, the chapter titles and the journey count. Both are vendored as
+latin subsets in `src/assets/fonts` (SIL Open Font License), so the book has no
+runtime dependency on a font CDN.
 
 ### The page turn
 

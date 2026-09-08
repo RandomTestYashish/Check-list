@@ -18,7 +18,7 @@ export function PageEdges({
   className?: string
 }) {
   return (
-    <div className={cn('flex h-6 items-end gap-[3px]', className)} aria-hidden>
+    <div className={cn('flex h-6 items-end gap-[3px] pb-[2px]', className)} aria-hidden>
       {chapters.map((chapter, index) => {
         const p = progressByChapter.get(chapter.id)?.percent ?? 0
         const isCurrent = index === current
@@ -30,15 +30,15 @@ export function PageEdges({
               ? { type: 'button' as const, onClick: () => onSelect(index), tabIndex: -1 }
               : {})}
             className={cn(
-              'relative h-full flex-1 overflow-hidden rounded-[1px] bg-rule/55',
+              'bg-foreground/10 relative h-full flex-1 overflow-hidden rounded-xs',
               onSelect && 'cursor-pointer',
             )}
           >
             <span
-              className="absolute inset-x-0 bottom-0 bg-accent/70 transition-[height] duration-500 ease-page"
+              className="bg-brand/80 absolute inset-x-0 bottom-0 transition-[height] duration-500 ease-page"
               style={{ height: `${p}%` }}
             />
-            {isCurrent && <span className="absolute inset-x-0 -bottom-0.5 h-[2px] bg-ink" />}
+            {isCurrent && <span className="bg-foreground absolute inset-x-0 -bottom-0.5 h-0.5" />}
           </Tag>
         )
       })}
@@ -46,7 +46,7 @@ export function PageEdges({
   )
 }
 
-/** "62 / 86 — 72% ready", or the completion notice once the book is finished. */
+/** "62 / 108 — 57% ready", or the completion notice once the book is finished. */
 export function JourneyProgress({
   done,
   total,
@@ -64,17 +64,25 @@ export function JourneyProgress({
 
   return (
     <div className={cn('space-y-3', className)}>
-      <div className="u-kicker text-ink-faint">{complete ? 'The book is complete' : 'Your journey'}</div>
+      <p className="u-kicker text-muted-foreground">
+        {complete ? 'The book is complete' : 'Your journey'}
+      </p>
       {complete ? (
-        <p className="u-display text-[1.5rem] leading-tight text-ink">You’re ready for Singapore.</p>
+        <p className="u-display text-card-foreground text-2xl leading-tight">
+          You’re ready for Singapore.
+        </p>
       ) : (
-        <div className="flex items-baseline gap-3">
-          <span className="u-display u-numeral text-[2rem] leading-none text-ink">{done}</span>
-          <span className="u-display u-numeral text-[1.25rem] leading-none text-ink-faint">/ {total}</span>
-          <span className="u-kicker ml-auto text-ink-muted">{percent}% ready</span>
+        <div className="flex items-baseline gap-2">
+          <span className="u-display u-numeral text-card-foreground text-3xl leading-none">
+            {done}
+          </span>
+          <span className="u-display u-numeral text-muted-foreground text-xl leading-none">
+            / {total}
+          </span>
+          <span className="u-kicker text-muted-foreground ml-auto">{percent}% ready</span>
         </div>
       )}
-      <PageEdges progressByChapter={progressByChapter} />
+      <PageEdges progressByChapter={progressByChapter} className="h-5" />
     </div>
   )
 }

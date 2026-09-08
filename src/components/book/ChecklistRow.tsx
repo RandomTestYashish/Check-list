@@ -1,6 +1,5 @@
-import * as Checkbox from '@radix-ui/react-checkbox'
-import { Check } from 'lucide-react'
 import type { ChecklistItem } from '@/data/checklist'
+import { Checkbox } from '@/components/ui/checkbox'
 import { cn } from '@/lib/utils'
 
 export function ChecklistRow({
@@ -13,52 +12,36 @@ export function ChecklistRow({
   onToggle: () => void
 }) {
   return (
-    <Checkbox.Root
-      checked={checked}
-      onCheckedChange={onToggle}
+    <label
       className={cn(
-        'group flex w-full cursor-pointer items-start gap-3.5 py-3 text-left',
-        // A comfortable thumb target without making the row look like a button.
-        'min-h-11 rounded-[3px] px-1 -mx-1 transition-colors hover:bg-paper-edge/70',
+        'group flex min-h-11 cursor-pointer items-start gap-3 rounded-md px-2 py-3 transition-colors',
+        'hover:bg-accent/60 has-[:focus-visible]:bg-accent/60',
       )}
     >
-      <span
-        className={cn(
-          'mt-[3px] grid size-[18px] shrink-0 place-items-center rounded-[3px] border transition-colors duration-100',
-          checked ? 'border-accent bg-accent/10' : 'border-rule-strong bg-transparent',
-        )}
-      >
-        <Checkbox.Indicator forceMount>
-          <Check
-            className={cn(
-              'size-3 text-accent transition-opacity duration-100',
-              checked ? 'opacity-100' : 'opacity-0',
-            )}
-            strokeWidth={3}
-          />
-        </Checkbox.Indicator>
-      </span>
+      <Checkbox checked={checked} onCheckedChange={onToggle} className="mt-0.5" />
 
-      <span className="min-w-0 flex-1">
-        <span
+      <div className="min-w-0 flex-1">
+        <p
           className={cn(
-            'block text-[0.9375rem] leading-snug transition-colors duration-150',
-            checked ? 'text-ink-faint line-through decoration-rule-strong' : 'text-ink',
+            'text-sm leading-snug transition-colors',
+            checked
+              ? 'text-muted-foreground line-through decoration-border'
+              : 'text-card-foreground',
           )}
         >
           {item.label}
-        </span>
+        </p>
         {item.note && (
-          <span
+          <p
             className={cn(
-              'mt-0.5 block text-[0.75rem] leading-snug transition-colors duration-150',
-              checked ? 'text-ink-faint/70' : 'text-ink-muted',
+              'text-muted-foreground mt-0.5 text-xs leading-snug transition-colors',
+              checked && 'opacity-60',
             )}
           >
             {item.note}
-          </span>
+          </p>
         )}
-      </span>
-    </Checkbox.Root>
+      </div>
+    </label>
   )
 }

@@ -9,9 +9,9 @@ import {
   MarginNote,
   RunningHead,
 } from '@/components/book/page-parts'
+import { Separator } from '@/components/ui/separator'
 import { PageEdges } from '@/components/book/progress-marks'
 import { TRIP, chapters } from '@/data/checklist'
-import { cn } from '@/lib/utils'
 
 /** Desktop reading view: a bound spread with the contents as front matter. */
 export function Spread({ book, onOpenContents }: { book: Book; onOpenContents: () => void }) {
@@ -29,13 +29,13 @@ export function Spread({ book, onOpenContents }: { book: Book; onOpenContents: (
 
   return (
     <div className="flex h-full min-h-0">
-      <aside className="hidden w-[19rem] shrink-0 border-r border-rule bg-paper-edge xl:flex xl:flex-col">
+      <aside className="bg-background hidden w-[19rem] shrink-0 border-r xl:flex xl:flex-col">
         <Contents book={book} onSelect={book.goTo} />
       </aside>
 
-      <main className="flex min-h-0 flex-1 flex-col">
+      <main className="book-desk flex min-h-0 flex-1 flex-col">
         <header className="flex shrink-0 items-center justify-between gap-6 px-8 py-5">
-          <span className="u-kicker text-ink-faint">
+          <span className="u-kicker text-muted-foreground">
             {TRIP.destination} · {TRIP.when}
           </span>
           <div className="flex items-center gap-4">
@@ -45,7 +45,7 @@ export function Spread({ book, onOpenContents }: { book: Book; onOpenContents: (
               onSelect={book.goTo}
               className="h-3 w-40"
             />
-            <span className="u-kicker u-numeral text-ink-muted">
+            <span className="u-kicker u-numeral text-muted-foreground">
               {book.totalDone} / {book.totalItems}
             </span>
             <Button size="sm" variant="outline" onClick={onOpenContents} className="xl:hidden">
@@ -63,10 +63,10 @@ export function Spread({ book, onOpenContents }: { book: Book; onOpenContents: (
             icon={<ChevronLeft className="size-5" />}
           />
 
-          <article className="u-grain relative mx-auto flex min-h-0 w-full max-w-[72rem] overflow-hidden rounded-[4px] border border-rule bg-paper shadow-page">
+          <article className="bg-card text-card-foreground relative mx-auto flex min-h-0 w-full max-w-[72rem] overflow-hidden rounded-xl border shadow-sm">
             {/* the binding */}
             <div
-              className="pointer-events-none absolute inset-y-0 left-[38%] z-10 w-10 -translate-x-1/2 bg-[linear-gradient(90deg,transparent,var(--rule)_48%,transparent)] opacity-60"
+              className="pointer-events-none absolute inset-y-0 left-[38%] z-10 w-10 -translate-x-1/2 bg-[linear-gradient(90deg,transparent,var(--border)_48%,transparent)]"
               aria-hidden
             />
 
@@ -80,13 +80,13 @@ export function Spread({ book, onOpenContents }: { book: Book; onOpenContents: (
                 <MarginNote>{chapter.tip}</MarginNote>
               </div>
               <div className="space-y-4">
-                <div className="h-px w-12 bg-rule" />
-                <p className="u-kicker text-ink-faint">
+                <Separator className="w-12" />
+                <p className="u-kicker text-muted-foreground">
                   {book.chapter < last
                     ? `Next — ${chapters[book.chapter + 1].number} ${chapters[book.chapter + 1].title}`
                     : 'End of the book'}
                 </p>
-                <p className="u-kicker u-numeral text-ink-faint">
+                <p className="u-kicker u-numeral text-muted-foreground/70">
                   {chapter.number} / {String(book.chapters.length).padStart(2, '0')}
                 </p>
               </div>
@@ -133,11 +133,12 @@ function SpreadArrow({
   return (
     <div className="flex shrink-0 items-center">
       <Button
-        size="icon"
+        variant="ghost"
+        size="icon-lg"
         aria-label={label}
         onClick={onClick}
         disabled={disabled}
-        className={cn('text-ink-faint hover:text-ink')}
+        className="text-muted-foreground"
       >
         {icon}
       </Button>

@@ -9,12 +9,15 @@ import {
   RunningHead,
 } from '@/components/book/page-parts'
 import { JourneyProgress } from '@/components/book/progress-marks'
+import { Separator } from '@/components/ui/separator'
 import { clamp } from '@/lib/utils'
 
 /** Fraction of the page width a swipe must cover to turn it. */
 const TURN_RATIO = 0.22
 /** ...or this speed, in px/ms, for a quick flick. */
 const FLICK_VELOCITY = 0.45
+/** A flick still has to cover this much, so a jittery tap can't turn a page. */
+const FLICK_MIN_RATIO = 0.08
 /** Movement before we decide the gesture is a page turn rather than a scroll. */
 const LOCK_SLOP = 10
 
@@ -101,7 +104,8 @@ export function PageDeck({ book }: { book: Book }) {
     const dx = event.clientX - g.startX
     const width = trackRef.current?.clientWidth || 1
     const turned =
-      Math.abs(dx) > width * TURN_RATIO || Math.abs(g.velocity) > FLICK_VELOCITY
+      Math.abs(dx) > width * TURN_RATIO ||
+      (Math.abs(g.velocity) > FLICK_VELOCITY && Math.abs(dx) > width * FLICK_MIN_RATIO)
 
     const target = clamp(
       turned ? book.chapter - Math.sign(dx) : book.chapter,
@@ -148,12 +152,12 @@ export function PageDeck({ book }: { book: Book }) {
               inert={!isCurrent}
               aria-hidden={!isCurrent}
               aria-label={`Chapter ${chapter.number}, ${chapter.title}`}
-              className="book-page u-grain relative h-full w-full shrink-0 overflow-y-auto overscroll-contain bg-paper"
+              className="book-page bg-card text-card-foreground relative h-full w-full shrink-0 overflow-y-auto overscroll-contain"
             >
               <div className="book-page-inner mx-auto flex min-h-full max-w-[34rem] flex-col px-6 pt-5 pb-8">
                 <RunningHead right={`${chapter.number} / 10`} className="pb-6" />
                 <ChapterHeading chapter={chapter} progress={progress} />
-                <div className="mt-7 mb-3 h-px bg-rule" />
+                <Separator className="mt-7 mb-3" />
                 <ChapterItems chapter={chapter} isChecked={book.isChecked} toggle={book.toggle} />
 
                 <MarginNote className="mt-8">{chapter.tip}</MarginNote>
@@ -164,7 +168,7 @@ export function PageDeck({ book }: { book: Book }) {
                     total={book.totalItems}
                     percent={book.totalPercent}
                     progressByChapter={book.progressByChapter}
-                    className="mt-10 border-t border-rule pt-6"
+                    className="mt-10 border-t pt-6"
                   />
                 )}
 
