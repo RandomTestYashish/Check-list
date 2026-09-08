@@ -18,19 +18,19 @@ export function BookNav({
   const total = String(book.chapters.length).padStart(2, '0')
 
   return (
-    <nav className="bg-background/85 supports-[backdrop-filter]:bg-background/70 shrink-0 border-t backdrop-blur">
+    <nav className="shrink-0 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
       <PageEdges
         progressByChapter={book.progressByChapter}
         current={book.chapter}
-        className="h-1.5 gap-px px-4 pt-2"
+        className="mx-auto mb-2.5 h-1.5 max-w-[22rem] gap-1"
       />
-      <div className="flex items-center gap-1 px-2 pt-1 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+      <div className="bg-card mx-auto flex max-w-[30rem] items-center gap-1 rounded-full p-1.5 shadow-[var(--shadow-soft)]">
         <Button
           variant="ghost"
           onClick={onPrevious}
           disabled={book.chapter === 0}
           aria-label="Previous page"
-          className="h-12 flex-1 justify-start gap-1 px-2 has-[>svg]:px-2"
+          className="h-11 flex-1 justify-start gap-1 px-3 has-[>svg]:px-3"
         >
           <ChevronLeftIcon className="size-4" />
           <span className="text-[0.8125rem]">Back</span>
@@ -39,8 +39,8 @@ export function BookNav({
         <Button
           variant="ghost"
           onClick={onOpenContents}
-          aria-label={`Contents — page ${book.chapter + 1} of ${book.chapters.length}`}
-          className="h-12 shrink-0 gap-2 px-3"
+          aria-label={`Contents, page ${book.chapter + 1} of ${book.chapters.length}`}
+          className="bg-muted h-11 shrink-0 gap-2 px-4 hover:bg-muted/80"
         >
           <span aria-hidden>📚</span>
           <span className="u-kicker u-numeral text-foreground">
@@ -54,7 +54,7 @@ export function BookNav({
           onClick={onNext}
           disabled={book.chapter === book.chapters.length - 1}
           aria-label="Next page"
-          className="h-12 flex-1 justify-end gap-1 px-2 has-[>svg]:px-2"
+          className="h-11 flex-1 justify-end gap-1 px-3 has-[>svg]:px-3"
         >
           <span className="text-[0.8125rem]">Next</span>
           <ChevronRightIcon className="size-4" />

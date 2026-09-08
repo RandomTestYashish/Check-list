@@ -40,8 +40,8 @@ export function ChapterHeading({
         <Separator className="flex-1" />
       </div>
 
-      <h2 className="u-display text-card-foreground flex items-baseline gap-2.5 text-[clamp(1.625rem,7vw,2.5rem)] leading-[1.05] tracking-[0.01em] uppercase">
-        <span className="shrink-0 text-[0.8em]" aria-hidden>
+      <h2 className="u-display text-card-foreground flex items-baseline gap-2.5 text-[clamp(1.75rem,7.5vw,2.625rem)] leading-[1.08] tracking-[-0.01em]">
+        <span className="shrink-0 text-[0.62em]" aria-hidden>
           {chapter.emoji}
         </span>
         {chapter.title}
@@ -52,7 +52,7 @@ export function ChapterHeading({
       </p>
 
       <div className="flex items-center gap-3 pt-1">
-        <span className="u-kicker u-numeral text-card-foreground shrink-0">
+        <span className="u-kicker u-numeral bg-muted text-foreground shrink-0 rounded-full px-3 py-1.5">
           {progress.done} / {progress.total} {chapterUnit[chapter.id] ?? 'done'}
         </span>
         <Progress
@@ -79,12 +79,12 @@ export function ChapterItems({
   return (
     <ul
       className={cn(
-        'divide-border divide-y',
-        columns && 'divide-y-0 lg:[column-count:2] lg:[column-gap:2rem]',
+        'flex flex-col gap-0.5',
+        columns && 'block lg:[column-count:2] lg:[column-gap:2rem]',
       )}
     >
       {chapter.items.map((item) => (
-        <li key={item.id} className={cn(columns && 'border-border break-inside-avoid border-b')}>
+        <li key={item.id} className={cn(columns && 'break-inside-avoid')}>
           <ChecklistRow
             item={item}
             checked={isChecked(item.id)}
@@ -101,7 +101,7 @@ export function MarginNote({ children, className }: { children: string; classNam
   return (
     <p
       className={cn(
-        'border-brand/40 text-muted-foreground border-l-2 pl-4 text-[0.8125rem] leading-relaxed',
+        'bg-muted/70 text-muted-foreground rounded-2xl px-4 py-3 text-[0.8125rem] leading-relaxed',
         className,
       )}
     >

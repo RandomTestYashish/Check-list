@@ -247,7 +247,12 @@ export function PageDeck({ book, onOpenContents }: { book: Book; onOpenContents:
           }
         }}
       >
-        {book.chapter < last && <div className="page-edges-decor" aria-hidden />}
+        {book.chapter < last && (
+          <>
+            <div className="page-stack page-stack-2" aria-hidden />
+            <div className="page-stack page-stack-1" aria-hidden />
+          </>
+        )}
 
         {book.chapters.map((chapter, index) => {
           const state: LeafState =
@@ -271,7 +276,7 @@ export function PageDeck({ book, onOpenContents }: { book: Book; onOpenContents:
               aria-label={`Page ${chapter.number} of 10, ${chapter.title}`}
             >
               <div className="leaf-face">
-                <div className="book-page-inner mx-auto flex min-h-full max-w-[34rem] flex-col px-5 pt-5 pb-8 sm:px-6">
+                <div className="book-page-inner mx-auto flex min-h-full max-w-[34rem] flex-col px-5 pt-7 pb-8 sm:px-7">
                   <RunningHead right={`${chapter.number} / 10`} className="pb-6" />
                   <ChapterHeading chapter={chapter} progress={progress} />
                   <Separator className="mt-7 mb-3" />

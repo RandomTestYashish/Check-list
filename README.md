@@ -77,22 +77,33 @@ React 19 + TypeScript + Vite + Tailwind CSS v4.
 
 ### Design system
 
-The visual language is [shadcn/ui](https://ui.shadcn.com), new-york style on the
-**stone** base colour, and the project is set up as a real shadcn project —
+The visual language is [shadcn/ui](https://ui.shadcn.com), new-york style, and
+the project is set up as a real shadcn project -
 `components.json` is present, so `npx shadcn@latest add <component>` drops
 components straight into `src/components/ui`. Everything is drawn with the
 standard tokens (`background`, `card`, `muted-foreground`, `border`, `ring`,
 `--radius`) in both light and dark; `src/index.css` holds them.
 
+Those tokens are tuned for a soft, light surface: a cool neutral grey ground, an
+off-white sheet floating on it, and elevation doing the work borders used to.
+There is no pure white and no pure black anywhere, and shadows are tinted to the
+ground hue rather than black. One shape rule runs through everything: sheets and
+pages 28px, inner panels 16px, chips and controls full pill, checkbox 8px.
+
 One token is added on top: `--brand`, the red that carries chapter numbers,
 chapter progress and the fore-edge marks. It is the only colour in the book that
-isn't stone.
+isn't a neutral.
 
 The editorial half is typographic rather than chromatic. Geist sets the interface
-at shadcn's sizes and weights; Fraunces sets display type only — the cover, the
+at shadcn's sizes and weights; Fraunces sets display type only: the cover, the
 chapter numbers, the chapter titles and the journey count. Both are vendored as
 latin subsets in `src/assets/fonts` (SIL Open Font License), so the book has no
 runtime dependency on a font CDN.
+
+`.claude/skills/taste-skill` names Fraunces as a banned default display serif.
+It is kept here deliberately, on the skill's own publication exception and on a
+standing instruction not to replace the project's typography, and its footprint is
+display-only. Swapping it is a one-line change to `--font-display`.
 
 ### The page turn
 

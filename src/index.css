@@ -25,56 +25,77 @@
     U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* shadcn/ui tokens, stone base. `--brand` is the one colour added on top:
-   the red that carries chapter numbers and progress. */
+/* shadcn/ui tokens, retuned for a soft, light surface language: a cool neutral
+   grey ground, an off-white sheet floating on it, and elevation doing the work
+   that borders used to. No pure white and no pure black anywhere.
+
+   SHAPE RULE (one system, applied everywhere):
+     sheets and pages   28px   (--radius-sheet)
+     inner panels       16px
+     chips and controls full pill
+     checkbox            8px
+   `--brand` is the single accent: chapter numbers, chapter progress, fore-edge. */
 :root {
-  --radius: 0.625rem;
+  --radius: 1rem;
+  --radius-sheet: 1.75rem;
+  --page-inset: 0.625rem;
 
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.147 0.004 49.25);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.147 0.004 49.25);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.147 0.004 49.25);
-  --primary: oklch(0.216 0.006 56.043);
-  --primary-foreground: oklch(0.985 0.001 106.423);
-  --secondary: oklch(0.97 0.001 106.424);
-  --secondary-foreground: oklch(0.216 0.006 56.043);
-  --muted: oklch(0.97 0.001 106.424);
-  --muted-foreground: oklch(0.553 0.013 58.071);
-  --accent: oklch(0.97 0.001 106.424);
-  --accent-foreground: oklch(0.216 0.006 56.043);
+  --background: oklch(0.945 0.003 286);
+  --foreground: oklch(0.19 0.004 286);
+  --card: oklch(0.992 0.001 286);
+  --card-foreground: oklch(0.19 0.004 286);
+  --popover: oklch(0.992 0.001 286);
+  --popover-foreground: oklch(0.19 0.004 286);
+  --primary: oklch(0.22 0.005 286);
+  --primary-foreground: oklch(0.985 0.001 286);
+  --secondary: oklch(0.965 0.002 286);
+  --secondary-foreground: oklch(0.19 0.004 286);
+  --muted: oklch(0.957 0.002 286);
+  --muted-foreground: oklch(0.55 0.008 286);
+  --accent: oklch(0.955 0.002 286);
+  --accent-foreground: oklch(0.19 0.004 286);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.923 0.003 48.717);
-  --input: oklch(0.923 0.003 48.717);
-  --ring: oklch(0.709 0.01 56.259);
+  --border: oklch(0.905 0.003 286);
+  --input: oklch(0.9 0.003 286);
+  --ring: oklch(0.75 0.006 286);
 
-  --brand: oklch(0.47 0.16 22);
-  --brand-foreground: oklch(0.985 0.001 106.423);
+  --brand: oklch(0.5 0.13 24);
+  --brand-foreground: oklch(0.99 0.001 286);
+
+  /* Shadows are tinted to the ground hue, never pure black. */
+  --shadow-soft: 0 1px 2px oklch(0.2 0.01 286 / 0.05), 0 6px 16px -10px oklch(0.2 0.01 286 / 0.16);
+  --shadow-lift: 0 1px 2px oklch(0.2 0.01 286 / 0.04), 0 12px 28px -14px oklch(0.2 0.01 286 / 0.18),
+    0 32px 64px -32px oklch(0.2 0.01 286 / 0.22);
+  --shadow-sunken: inset 0 1px 2px oklch(0.2 0.01 286 / 0.07);
 }
 
 .dark {
-  --background: oklch(0.147 0.004 49.25);
-  --foreground: oklch(0.985 0.001 106.423);
-  --card: oklch(0.216 0.006 56.043);
-  --card-foreground: oklch(0.985 0.001 106.423);
-  --popover: oklch(0.216 0.006 56.043);
-  --popover-foreground: oklch(0.985 0.001 106.423);
-  --primary: oklch(0.923 0.003 48.717);
-  --primary-foreground: oklch(0.216 0.006 56.043);
-  --secondary: oklch(0.268 0.007 34.298);
-  --secondary-foreground: oklch(0.985 0.001 106.423);
-  --muted: oklch(0.268 0.007 34.298);
-  --muted-foreground: oklch(0.709 0.01 56.259);
-  --accent: oklch(0.268 0.007 34.298);
-  --accent-foreground: oklch(0.985 0.001 106.423);
+  --background: oklch(0.155 0.004 286);
+  --foreground: oklch(0.96 0.002 286);
+  --card: oklch(0.208 0.005 286);
+  --card-foreground: oklch(0.96 0.002 286);
+  --popover: oklch(0.208 0.005 286);
+  --popover-foreground: oklch(0.96 0.002 286);
+  --primary: oklch(0.95 0.002 286);
+  --primary-foreground: oklch(0.2 0.005 286);
+  --secondary: oklch(0.26 0.006 286);
+  --secondary-foreground: oklch(0.96 0.002 286);
+  --muted: oklch(0.262 0.006 286);
+  --muted-foreground: oklch(0.705 0.008 286);
+  --accent: oklch(0.262 0.006 286);
+  --accent-foreground: oklch(0.96 0.002 286);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.553 0.013 58.071);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.5 0.01 286);
 
-  --brand: oklch(0.68 0.13 22);
-  --brand-foreground: oklch(0.216 0.006 56.043);
+  --brand: oklch(0.7 0.12 24);
+  --brand-foreground: oklch(0.2 0.005 286);
+
+  --shadow-soft: 0 1px 2px oklch(0 0 0 / 0.3), 0 6px 16px -10px oklch(0 0 0 / 0.5);
+  --shadow-lift: 0 1px 2px oklch(0 0 0 / 0.3), 0 12px 28px -14px oklch(0 0 0 / 0.55),
+    0 32px 64px -32px oklch(0 0 0 / 0.6);
+  --shadow-sunken: inset 0 1px 2px oklch(0 0 0 / 0.35);
 }
 
 @theme inline {
@@ -99,8 +120,8 @@
   --color-brand: var(--brand);
   --color-brand-foreground: var(--brand-foreground);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 8px);
+  --radius-md: calc(var(--radius) - 4px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
@@ -190,9 +211,30 @@
   overflow: hidden;
 }
 
+/* The sheets still to come, peeking out under the current page. */
+.page-stack {
+  position: absolute;
+  inset: var(--page-inset);
+  z-index: 0;
+  pointer-events: none;
+  border-radius: var(--radius-sheet);
+  background: var(--card);
+  box-shadow: var(--shadow-soft);
+}
+
+.page-stack-1 {
+  transform: translateY(7px) scaleX(0.965);
+  opacity: 0.75;
+}
+
+.page-stack-2 {
+  transform: translateY(13px) scaleX(0.93);
+  opacity: 0.45;
+}
+
 .leaf {
   position: absolute;
-  inset: 0;
+  inset: var(--page-inset);
   transform-origin: left center;
   /* Hidden on the leaf itself rather than on a separate reverse-side element:
      an absolutely positioned back face covers the page for touch hit-testing,
@@ -246,8 +288,9 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   touch-action: pan-y;
+  border-radius: var(--radius-sheet);
   background: var(--card);
-  box-shadow: 0 0 24px -14px rgb(0 0 0 / 0.5);
+  box-shadow: var(--shadow-lift);
 }
 
 /* The page underneath sits in shadow until the leaf above it clears. */
@@ -260,7 +303,8 @@
   inset: 0;
   pointer-events: none;
   opacity: 0;
-  background: linear-gradient(to right, rgb(0 0 0 / 0.55), rgb(0 0 0 / 0.1) 45%, transparent);
+  border-radius: var(--radius-sheet);
+  background: linear-gradient(to right, oklch(0.2 0.01 286 / 0.5), oklch(0.2 0.01 286 / 0.08) 45%, transparent);
 }
 
 /* The hint sits on the stage, not on the leaf, so it stands still while a
@@ -279,22 +323,6 @@
 
 .book-stage[data-jump='true'] .leaf[data-state='current'] .leaf-face {
   animation: leaf-arrive 220ms var(--ease-page) both;
-}
-
-/* The edge of the pages still to come. */
-.page-edges-decor {
-  position: absolute;
-  pointer-events: none;
-  inset-block: 1.25rem;
-  right: 0;
-  z-index: 0;
-  width: 5px;
-  border-left: 1px solid var(--border);
-  background: repeating-linear-gradient(
-    to right,
-    var(--card) 0 2px,
-    var(--border) 2px 3px
-  );
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -30,15 +30,15 @@ export function PageEdges({
               ? { type: 'button' as const, onClick: () => onSelect(index), tabIndex: -1 }
               : {})}
             className={cn(
-              'bg-foreground/10 relative h-full flex-1 overflow-hidden rounded-xs',
+              'bg-foreground/10 relative h-full flex-1 overflow-hidden rounded-full',
               onSelect && 'cursor-pointer',
             )}
           >
             <span
-              className="bg-brand/80 absolute inset-x-0 bottom-0 transition-[height] duration-500 ease-page"
+              className="bg-brand/85 absolute inset-x-0 bottom-0 rounded-full transition-[height] duration-500 ease-page"
               style={{ height: `${p}%` }}
             />
-            {isCurrent && <span className="bg-foreground absolute inset-x-0 -bottom-0.5 h-0.5" />}
+            {isCurrent && <span className="bg-foreground absolute inset-x-0 -bottom-1 h-0.5 rounded-full" />}
           </Tag>
         )
       })}

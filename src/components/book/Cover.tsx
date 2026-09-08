@@ -2,7 +2,6 @@ import { ArrowRightIcon } from 'lucide-react'
 import { TRIP, chapters } from '@/data/checklist'
 import type { Book } from '@/hooks/useBook'
 import { PageEdges } from '@/components/book/progress-marks'
-import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 
 export function Cover({
@@ -24,7 +23,7 @@ export function Cover({
         opening ? 'pointer-events-none scale-[0.985] opacity-0' : 'opacity-100',
       )}
     >
-      <div className="bg-card text-card-foreground flex w-full flex-col rounded-xl border px-7 py-9 shadow-sm sm:px-12 sm:py-12 md:mx-auto md:max-w-2xl">
+      <div className="bg-card text-card-foreground flex w-full flex-col rounded-[1.75rem] px-7 py-9 shadow-[var(--shadow-lift)] sm:px-12 sm:py-12 md:mx-auto md:max-w-2xl">
         <div className="flex items-start justify-between">
           <span className="u-kicker text-muted-foreground">{TRIP.kicker}</span>
           <span className="text-lg leading-none" aria-hidden>
@@ -36,7 +35,7 @@ export function Cover({
           <h1 className="u-display text-[clamp(2.75rem,13vw,5rem)] leading-[0.95] tracking-[0.005em] uppercase">
             {TRIP.destination}
           </h1>
-          <div className="bg-brand mt-6 mb-4 h-0.5 w-16" />
+          <div className="bg-brand mt-6 mb-4 h-1 w-14 rounded-full" />
           <p className="u-kicker text-muted-foreground">{TRIP.when}</p>
           <p className="u-kicker u-numeral text-muted-foreground/70 mt-3">
             {chapters.length} chapters · {book.totalItems} things
@@ -57,21 +56,20 @@ export function Cover({
           )}
 
           <div className="space-y-5">
-            <Separator />
             <button
               type="button"
               onClick={onOpen}
-              className="group focus-visible:ring-ring/50 flex w-full items-center justify-between gap-4 rounded-lg text-left outline-none focus-visible:ring-[3px]"
+              className="group bg-muted/70 focus-visible:ring-ring/50 flex w-full items-center justify-between gap-4 rounded-[1.25rem] p-4 text-left outline-none transition-colors hover:bg-muted focus-visible:ring-[3px]"
             >
               <span className="min-w-0">
                 <span className="u-kicker text-muted-foreground block">
                   {started ? 'Continue' : 'Open the book'}
                 </span>
                 <span className="u-display mt-1 block truncate text-xl leading-tight">
-                  {started ? `${resume.number} — ${resume.title}` : 'Start at the beginning'}
+                  {started ? `${resume.number} ${resume.title}` : 'Start at the beginning'}
                 </span>
               </span>
-              <span className="bg-primary text-primary-foreground grid size-11 shrink-0 place-items-center rounded-full transition-transform group-hover:translate-x-0.5">
+              <span className="bg-primary text-primary-foreground grid size-14 shrink-0 place-items-center rounded-full shadow-[var(--shadow-soft)] transition-transform group-hover:translate-x-0.5 group-active:scale-95">
                 <ArrowRightIcon className="size-4" />
               </span>
             </button>

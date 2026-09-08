@@ -41,7 +41,7 @@ export function Contents({
                   aria-current={current ? 'page' : undefined}
                   className={cn(
                     'focus-visible:ring-ring/50 flex w-full items-baseline gap-1 rounded-md px-2 py-3 text-left transition-colors outline-none focus-visible:ring-[3px]',
-                    current ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50',
+                    current ? 'bg-muted text-foreground' : 'hover:bg-muted/60',
                   )}
                 >
                   <span
@@ -120,7 +120,7 @@ function ThemeToggle({
           className={cn(
             'size-7 px-0',
             value === option
-              ? 'bg-background text-foreground shadow-xs'
+              ? 'bg-card text-foreground shadow-[var(--shadow-soft)]'
               : 'text-muted-foreground hover:bg-transparent',
           )}
         >
