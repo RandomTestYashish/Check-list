@@ -1,0 +1,311 @@
+@import 'tailwindcss';
+
+/* Theme is resolved to an explicit attribute in main.tsx so that the toggle
+   and the system preference share one code path. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('./assets/fonts/fraunces-latin-standard-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('./assets/fonts/inter-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* Light — warm paper stock */
+  --desk: #efe9df;
+  --paper: #fbf8f3;
+  --paper-edge: #f3ede2;
+  --ink: #17140f;
+  --ink-muted: #6d6558;
+  --ink-faint: #a49a8a;
+  --rule: #e2dacb;
+  --rule-strong: #cec4b1;
+  --accent: #a3222b;
+  --accent-ink: #fbf8f3;
+  --accent-wash: #f5e7e5;
+  --shadow-page: 0 1px 2px rgb(23 20 15 / 0.04), 0 12px 32px -16px rgb(23 20 15 / 0.28);
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  /* Dark — ink on a night-reading page */
+  --desk: #0b0a09;
+  --paper: #161512;
+  --paper-edge: #1c1a16;
+  --ink: #efe9dd;
+  --ink-muted: #9c9384;
+  --ink-faint: #6b6355;
+  --rule: #2c2822;
+  --rule-strong: #423c33;
+  --accent: #dd6f72;
+  --accent-ink: #161512;
+  --accent-wash: #2a1e1d;
+  --shadow-page: 0 1px 2px rgb(0 0 0 / 0.4), 0 16px 40px -20px rgb(0 0 0 / 0.7);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-desk: var(--desk);
+  --color-paper: var(--paper);
+  --color-paper-edge: var(--paper-edge);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-wash: var(--accent-wash);
+
+  --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --shadow-page: var(--shadow-page);
+
+  --ease-page: cubic-bezier(0.22, 0.61, 0.24, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--rule);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--desk);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
+  }
+
+  /* The book fills the viewport; only page bodies scroll. */
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--accent-wash);
+    color: var(--ink);
+  }
+}
+
+@layer components {
+  /* Small caps-style label used for running heads, kickers and page numbers. */
+  .u-kicker {
+    font-family: var(--font-sans);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .u-numeral {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.08em;
+  }
+
+  .u-display {
+    font-family: var(--font-display);
+    font-variation-settings: 'opsz' 96, 'SOFT' 12;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  /* Paper grain: one tiny tiled SVG, painted once, no repaint cost. */
+  .u-grain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  [data-theme='dark'] .u-grain::before {
+    opacity: 0.05;
+    mix-blend-mode: screen;
+  }
+
+  /* Dotted leader for the table of contents. */
+  .u-leader {
+    flex: 1 1 auto;
+    margin: 0 0.6rem;
+    border-bottom: 1px dotted var(--rule-strong);
+    transform: translateY(-0.28em);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Book motion
+   The page deck is driven by one custom property, --pos, written
+   straight to the DOM during a drag so a swipe never re-renders React.
+   ------------------------------------------------------------------ */
+
+.book-track {
+  --pos: 0;
+  transform: translate3d(calc(var(--pos) * -100%), 0, 0);
+  transition: transform 380ms var(--ease-page);
+  will-change: transform;
+}
+
+.book-track[data-dragging='true'] {
+  transition: none;
+}
+
+.book-page {
+  /* Content trails the page slightly, the way paper lifts off the spine. */
+  --lead: calc((var(--i) - var(--pos)) * 9%);
+  box-shadow: inset 12px 0 20px -18px rgb(0 0 0 / 0.35);
+}
+
+.book-page-inner {
+  transform: translate3d(var(--lead), 0, 0);
+  transition: transform 380ms var(--ease-page);
+}
+
+.book-track[data-dragging='true'] .book-page-inner {
+  transition: none;
+}
+
+/* Reduced motion: pages change instantly, nothing slides. */
+.book-track[data-reduced='true'],
+.book-track[data-reduced='true'] .book-page-inner {
+  transition: none;
+}
+
+.book-track[data-reduced='true'] .book-page-inner {
+  transform: none;
+}
+
+@keyframes book-open {
+  from {
+    opacity: 0;
+    transform: scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.book-open {
+  animation: book-open 360ms var(--ease-page) both;
+}
+
+@keyframes page-fade-forward {
+  from {
+    opacity: 0;
+    transform: translate3d(1.25rem, 0, 0);
+  }
+}
+
+@keyframes page-fade-back {
+  from {
+    opacity: 0;
+    transform: translate3d(-1.25rem, 0, 0);
+  }
+}
+
+.book-fade[data-direction='forward'] {
+  animation: page-fade-forward 260ms var(--ease-page) both;
+}
+
+.book-fade[data-direction='back'] {
+  animation: page-fade-back 260ms var(--ease-page) both;
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+}
+
+@keyframes sheet-in-centred {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 8px));
+  }
+}
+
+.book-overlay[data-state='open'] {
+  animation: overlay-in 180ms ease-out both;
+}
+
+.book-sheet[data-state='open'] {
+  animation: sheet-in 240ms var(--ease-page) both;
+}
+
+@media (min-width: 640px) {
+  .book-sheet[data-state='open'] {
+    animation-name: sheet-in-centred;
+  }
+}
+
+/* A phone held sideways has very little height to spend on a chapter opening. */
+@media (orientation: landscape) and (max-height: 560px) {
+  .book-page-inner {
+    padding-top: 0.75rem;
+  }
+
+  .chapter-heading {
+    --spacing-block: 0.5rem;
+  }
+
+  .chapter-heading h2 {
+    font-size: 1.625rem;
+  }
+
+  .chapter-heading > * + * {
+    margin-top: 0.5rem;
+  }
+}
