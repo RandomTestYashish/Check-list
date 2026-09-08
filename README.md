@@ -45,6 +45,19 @@ Item `id`s are the storage keys. Adding, reordering and rewording items is safe;
 **changing an existing `id` clears that item's tick** for anyone who already has
 the book open.
 
+## The design skill
+
+`.claude/skills/taste-skill/SKILL.md` is [leonxlnx/taste-skill](https://github.com/leonxlnx/taste-skill)
+(MIT, vendored verbatim at commit `ccbc156`) — the anti-slop frontend skill this
+project's visual direction is meant to follow. It is committed here so it travels
+with the repository rather than living in one machine's Claude Code config; it
+loads in a new session on this repo and is invoked as `design-taste-frontend`.
+
+Updating it means re-copying `skills/taste-skill/SKILL.md` from upstream. The
+repository ships twelve further skills — brutalist, minimalist, soft, redesign,
+stitch, image-to-code and others — which are not vendored here; the whole set can
+be added instead with `/plugin marketplace add leonxlnx/taste-skill`.
+
 ## How it is put together
 
 | | |
@@ -57,6 +70,7 @@ the book open.
 | `src/components/book/Contents.tsx` | Table of contents, journey progress, theme, reset |
 | `src/components/book/Cover.tsx` | The cover and its opening transition |
 | `src/index.css` | shadcn tokens, typography and the book motion |
+| `.claude/skills/taste-skill/` | The design skill this project's visual direction follows |
 | `src/components/ui/` | shadcn components (button, checkbox, sheet, separator, progress) |
 
 React 19 + TypeScript + Vite + Tailwind CSS v4.
