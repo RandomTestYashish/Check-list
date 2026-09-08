@@ -22,8 +22,9 @@ npm run icons      # regenerate the app icons from scripts/make-icons.mjs
 ## Deploying
 
 `.github/workflows/deploy.yml` builds and publishes `dist/` to GitHub Pages on
-every push to `main`. Enable it once under **Settings → Pages → Source → GitHub
-Actions**; the site then lives at `https://<user>.github.io/Check-list/`.
+every push to `main` and to the current feature branch. Enable it once under
+**Settings → Pages → Source → GitHub Actions**; the site then lives at
+`https://randomtestyashish.github.io/Check-list/`, publicly, with no sign-in.
 
 The base path is `/Check-list/` to match the repository name. Hosting at a domain
 root instead:
@@ -95,15 +96,15 @@ chapter progress and the fore-edge marks. It is the only colour in the book that
 isn't a neutral.
 
 The editorial half is typographic rather than chromatic. Geist sets the interface
-at shadcn's sizes and weights; Fraunces sets display type only: the cover, the
-chapter numbers, the chapter titles and the journey count. Both are vendored as
+at shadcn's sizes and weights; [Syne](https://fonts.google.com/specimen/Syne) sets
+display type only: the cover, the chapter titles and the sheet's largest words. Both are vendored as
 latin subsets in `src/assets/fonts` (SIL Open Font License), so the book has no
 runtime dependency on a font CDN.
 
-`.claude/skills/taste-skill` names Fraunces as a banned default display serif.
-It is kept here deliberately, on the skill's own publication exception and on a
-standing instruction not to replace the project's typography, and its footprint is
-display-only. Swapping it is a one-line change to `--font-display`.
+Syne is display-only on purpose: its capitals are wide and its zero reads as an o
+at label sizes, so counters, page numbers and small caps labels stay in Geist with
+tabular figures. `.u-numeral` is declared after `.u-display` so it wins on the
+elements that carry both.
 
 ### The page turn
 

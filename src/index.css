@@ -3,7 +3,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Geist for the interface, Fraunces for anything set as display type.
+/* Geist for the interface, Syne for display type and small caps labels.
    Both are vendored as latin subsets so the book works with no network. */
 @font-face {
   font-family: 'Geist';
@@ -16,11 +16,11 @@
 }
 
 @font-face {
-  font-family: 'Fraunces';
+  font-family: 'Syne';
   font-style: normal;
   font-display: swap;
-  font-weight: 100 900;
-  src: url('./assets/fonts/fraunces-latin-standard-normal.woff2') format('woff2-variations');
+  font-weight: 400 800;
+  src: url('./assets/fonts/syne-latin-wght-normal.woff2') format('woff2-variations');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
     U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
@@ -126,7 +126,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 
   --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-display: 'Syne', 'Geist', ui-sans-serif, system-ui, sans-serif;
 
   --ease-page: cubic-bezier(0.22, 0.61, 0.24, 1);
 }
@@ -161,23 +161,27 @@
 @layer components {
   /* Running heads, kickers, folios — the small type of the book. */
   .u-kicker {
+    font-family: var(--font-sans);
     font-size: 0.6875rem;
     font-weight: 500;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     font-variant-numeric: tabular-nums;
   }
 
-  .u-numeral {
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.04em;
-  }
-
   .u-display {
     font-family: var(--font-display);
-    font-variation-settings: 'opsz' 96, 'SOFT' 12;
-    font-weight: 400;
+    font-weight: 700;
     letter-spacing: -0.02em;
+  }
+
+  /* Counters and page numbers stay in Geist: Syne has no tabular figures and
+     its zero reads as an o at small sizes. Declared after .u-display so it
+     wins where an element carries both. */
+  .u-numeral {
+    font-family: var(--font-sans);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
   }
 
   /* The surface the book sits on: a shade under the page in light, the base

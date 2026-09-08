@@ -32,7 +32,7 @@ export function Cover({
         </div>
 
         <div className="flex flex-1 flex-col justify-center py-10">
-          <h1 className="u-display text-[clamp(2.75rem,13vw,5rem)] leading-[0.95] tracking-[0.005em] uppercase">
+          <h1 className="u-display text-[clamp(2.125rem,10.5vw,4.25rem)] leading-[0.98] tracking-[-0.03em] uppercase">
             {TRIP.destination}
           </h1>
           <div className="bg-brand mt-6 mb-4 h-1 w-14 rounded-full" />
@@ -65,7 +65,7 @@ export function Cover({
                 <span className="u-kicker text-muted-foreground block">
                   {started ? 'Continue' : 'Open the book'}
                 </span>
-                <span className="u-display mt-1 block truncate text-xl leading-tight">
+                <span className="u-display mt-1 block truncate text-[1.0625rem] leading-tight">
                   {started ? `${resume.number} ${resume.title}` : 'Start at the beginning'}
                 </span>
               </span>
