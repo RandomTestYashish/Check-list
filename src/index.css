@@ -194,7 +194,10 @@
   position: absolute;
   inset: 0;
   transform-origin: left center;
-  transform-style: preserve-3d;
+  /* Hidden on the leaf itself rather than on a separate reverse-side element:
+     an absolutely positioned back face covers the page for touch hit-testing,
+     and the browser then never finds the scroller underneath it. */
+  backface-visibility: hidden;
   transition:
     transform 480ms cubic-bezier(0.33, 0.02, 0.15, 1),
     opacity 480ms cubic-bezier(0.33, 0.02, 0.15, 1);
@@ -243,18 +246,8 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   touch-action: pan-y;
-  backface-visibility: hidden;
   background: var(--card);
   box-shadow: 0 0 24px -14px rgb(0 0 0 / 0.5);
-}
-
-/* The reverse of the sheet, seen for the second half of a turn. */
-.leaf-back {
-  position: absolute;
-  inset: 0;
-  transform: rotateY(180deg);
-  backface-visibility: hidden;
-  background: linear-gradient(to left, var(--card) 82%, color-mix(in oklab, var(--card), var(--foreground) 7%));
 }
 
 /* The page underneath sits in shadow until the leaf above it clears. */
@@ -291,6 +284,7 @@
 /* The edge of the pages still to come. */
 .page-edges-decor {
   position: absolute;
+  pointer-events: none;
   inset-block: 1.25rem;
   right: 0;
   z-index: 0;

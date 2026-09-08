@@ -297,7 +297,6 @@ export function PageDeck({ book, onOpenContents }: { book: Book; onOpenContents:
                 </div>
                 <div className="leaf-shade" aria-hidden />
               </div>
-              <div className="leaf-back" aria-hidden />
             </article>
           )
         })}
