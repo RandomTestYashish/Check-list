@@ -335,6 +335,210 @@
   background-image: var(--paper-wash);
 }
 
+/* ------------------------------------------------------------------
+   The cover
+   A bound navy board on an off-white page. Everything inside the board
+   is sized in container units, so the composition scales as one object
+   and keeps its proportions at every width.
+   ------------------------------------------------------------------ */
+
+.tb-page {
+  --paper-white: #f5f3ee;
+  --navy: #0d1b2e;
+  --navy-lift: #16273f;
+  --gold: #d9a94a;
+  --gold-light: #ebc87c;
+  --gold-deep: #bf8f37;
+
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.9rem, 3vh, 1.75rem);
+  padding: clamp(1rem, 4vh, 3rem) 1rem;
+  background: var(--paper-white);
+}
+
+.tb-button {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  perspective: 1600px;
+  border-radius: 22px;
+}
+
+.tb-button:focus-visible {
+  outline: 2px solid var(--gold-deep);
+  outline-offset: 6px;
+}
+
+.tb-shell {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+
+  position: relative;
+  display: block;
+  width: min(88vw, calc(min(74svh, 760px) * 0.73));
+  aspect-ratio: 73 / 100;
+  container-type: inline-size;
+  overflow: hidden;
+  border-radius: 20px;
+  background-color: var(--navy);
+  background-image: linear-gradient(168deg, var(--navy-lift) 0%, var(--navy) 46%, #0a1524 100%);
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(0);
+  transition:
+    transform 620ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 620ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  box-shadow:
+    inset 0 0 0 1px rgb(0 0 0 / 0.55),
+    inset 0 1px 0 rgb(255 255 255 / 0.07),
+    inset 0 -70px 90px -70px rgb(0 0 0 / 0.75),
+    0 2px 3px rgb(13 27 46 / 0.12),
+    0 22px 36px -22px rgb(13 27 46 / 0.45),
+    0 54px 80px -50px rgb(13 27 46 / 0.5);
+}
+
+.tb-button:hover .tb-shell {
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(-3px);
+  box-shadow:
+    inset 0 0 0 1px rgb(0 0 0 / 0.55),
+    inset 0 1px 0 rgb(255 255 255 / 0.09),
+    inset 0 -70px 90px -70px rgb(0 0 0 / 0.75),
+    0 3px 5px rgb(13 27 46 / 0.14),
+    0 30px 46px -24px rgb(13 27 46 / 0.5),
+    0 70px 96px -52px rgb(13 27 46 / 0.55);
+}
+
+/* Light on the board, and the tonal variation of a dyed cloth. */
+.tb-texture {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(105% 62% at 20% 6%, rgb(255 255 255 / 0.085), transparent 58%),
+    radial-gradient(80% 55% at 88% 96%, rgb(0 0 0 / 0.4), transparent 62%),
+    radial-gradient(60% 40% at 92% 14%, rgb(255 255 255 / 0.03), transparent 60%);
+}
+
+/* The grain itself: fine, and only there when you look for it. */
+.tb-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.45;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* The hardcover spine: a darker strip and the crease beside it. */
+.tb-spine {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 7.5cqw;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgb(0 0 0 / 0.42) 0%,
+    rgb(0 0 0 / 0.2) 34%,
+    rgb(255 255 255 / 0.045) 62%,
+    rgb(0 0 0 / 0.16) 82%,
+    transparent 100%
+  );
+}
+
+.tb-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: 12cqw 8cqw 6cqw;
+  text-align: center;
+  color: var(--gold);
+}
+
+.tb-star {
+  width: 8.6cqw;
+  color: var(--gold);
+}
+
+.tb-emblem {
+  width: 46cqw;
+  margin-top: 0.5cqw;
+  color: var(--gold);
+}
+
+.tb-divider {
+  display: block;
+  width: 13cqw;
+  height: max(1px, 0.45cqw);
+  margin: 5.5cqw 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--gold-deep), var(--gold-light), var(--gold-deep));
+  opacity: 0.9;
+}
+
+.tb-title {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4cqw;
+  font-family: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  font-weight: 500;
+  font-size: 8.6cqw;
+  line-height: 1.05;
+  letter-spacing: 0.035em;
+  text-indent: 0.035em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 48%, var(--gold-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tb-tagline {
+  font-family: var(--font-sans);
+  font-size: 3.1cqw;
+  font-weight: 500;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.92;
+}
+
+.tb-mark {
+  width: 13cqw;
+  margin-top: auto;
+  margin-bottom: 2cqw;
+  color: var(--gold);
+  opacity: 0.92;
+}
+
+.tb-footnote {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8a8578;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tb-shell,
+  .tb-button:hover .tb-shell {
+    transform: none;
+    transition: none;
+  }
+}
+
 /* Guilloche printing: two wave passes at different scales, interfering the way
    security printing does. Strongest at the head of the page and gone by the
    middle, so it never competes with the list. */
