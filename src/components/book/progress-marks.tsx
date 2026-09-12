@@ -1,4 +1,5 @@
 import { chapters } from '@/data/checklist'
+import { JourneyStamp, stampDate } from '@/components/book/PassportStamp'
 import type { ChapterProgress } from '@/hooks/useBook'
 import { cn } from '@/lib/utils'
 
@@ -59,12 +60,15 @@ export function JourneyProgress({
   total,
   percent,
   progressByChapter,
+  stamp = false,
   className,
 }: {
   done: number
   total: number
   percent: number
   progressByChapter: Map<string, ChapterProgress>
+  /** The closing stamp belongs on the last page, not in the contents. */
+  stamp?: boolean
   className?: string
 }) {
   if (done === total) {
@@ -80,6 +84,11 @@ export function JourneyProgress({
           <span aria-hidden>🇸🇬</span> Singapore is waiting.
         </p>
         <PageEdges progressByChapter={progressByChapter} className="h-5" />
+        {stamp && (
+          <div className="flex justify-center pt-4">
+            <JourneyStamp total={total} date={stampDate(undefined)} />
+          </div>
+        )}
       </div>
     )
   }

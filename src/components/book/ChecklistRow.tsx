@@ -24,7 +24,7 @@ export function ChecklistRow({
         <p
           className={cn(
             'text-sm leading-snug transition-colors',
-            checked ? 'text-muted-foreground line-through decoration-border' : 'text-card-foreground',
+            checked ? 'text-muted-foreground line-through decoration-1' : 'text-card-foreground',
           )}
         >
           {item.label}

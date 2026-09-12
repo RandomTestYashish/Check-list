@@ -275,10 +275,15 @@ export function PageDeck({ book, onOpenContents }: { book: Book; onOpenContents:
               aria-hidden={!isCurrent}
               aria-label={`Page ${chapter.number} of 10, ${chapter.title}`}
             >
+              <div className="leaf-print" aria-hidden />
               <div className="leaf-face">
                 <div className="book-page-inner mx-auto flex min-h-full max-w-[34rem] flex-col px-5 pt-7 pb-8 sm:px-7">
                   <RunningHead right={`${chapter.number} / 10`} className="pb-6" />
-                  <ChapterHeading chapter={chapter} progress={progress} />
+                  <ChapterHeading
+                    chapter={chapter}
+                    progress={progress}
+                    stampedOn={book.stamps[chapter.id]}
+                  />
                   <Separator className="mt-7 mb-3" />
                   <ChapterItems
                     chapter={chapter}
@@ -295,6 +300,7 @@ export function PageDeck({ book, onOpenContents }: { book: Book; onOpenContents:
                       percent={book.totalPercent}
                       progressByChapter={book.progressByChapter}
                       className="mt-10 border-t pt-6"
+                      stamp
                     />
                   )}
 

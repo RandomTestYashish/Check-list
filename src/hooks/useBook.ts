@@ -13,11 +13,12 @@ export function useBook() {
   const [theme, setTheme] = useState<ThemePreference>(() => initial?.theme ?? 'system')
   const [seenIntro, setSeenIntro] = useState(() => initial?.seenIntro ?? false)
   const [hasFlipped, setHasFlipped] = useState(() => initial?.hasFlipped ?? false)
+  const [stamps, setStamps] = useState<Record<string, string>>(() => initial?.stamps ?? {})
 
   // Persist on every change. The payload is tiny, so there is nothing to debounce.
   useEffect(() => {
-    save({ checked: [...checked], chapter, theme, seenIntro, hasFlipped })
-  }, [checked, chapter, theme, seenIntro, hasFlipped])
+    save({ checked: [...checked], chapter, theme, seenIntro, hasFlipped, stamps })
+  }, [checked, chapter, theme, seenIntro, hasFlipped, stamps])
 
   useEffect(() => {
     const root = document.documentElement
@@ -43,7 +44,10 @@ export function useBook() {
     })
   }, [])
 
-  const reset = useCallback(() => setChecked(new Set()), [])
+  const reset = useCallback(() => {
+    setChecked(new Set())
+    setStamps({})
+  }, [])
 
   const progressByChapter = useMemo(() => {
     const map = new Map<string, ChapterProgress>()
@@ -58,6 +62,26 @@ export function useBook() {
     () => chapters.reduce((n, c) => n + (progressByChapter.get(c.id)?.done ?? 0), 0),
     [progressByChapter],
   )
+
+  // A chapter is stamped the day it is finished, and loses the stamp if an
+  // item is unticked again.
+  useEffect(() => {
+    setStamps((previous) => {
+      const next = { ...previous }
+      let changed = false
+      for (const c of chapters) {
+        const complete = progressByChapter.get(c.id)?.percent === 100
+        if (complete && !next[c.id]) {
+          next[c.id] = new Date().toISOString()
+          changed = true
+        } else if (!complete && next[c.id]) {
+          delete next[c.id]
+          changed = true
+        }
+      }
+      return changed ? next : previous
+    })
+  }, [progressByChapter])
 
   const goTo = useCallback((index: number) => {
     setChapter(clamp(index, 0, chapters.length - 1))
@@ -82,6 +106,7 @@ export function useBook() {
     dismissIntro: useCallback(() => setSeenIntro(true), []),
     hasFlipped,
     markFlipped: useCallback(() => setHasFlipped(true), []),
+    stamps,
   }
 }
 

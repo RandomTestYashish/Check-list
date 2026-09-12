@@ -2,6 +2,7 @@ import type { Chapter } from '@/data/checklist'
 import { chapterUnit, chapters } from '@/data/checklist'
 import type { ChapterProgress } from '@/hooks/useBook'
 import { ChecklistRow } from '@/components/book/ChecklistRow'
+import { ChapterStamp, stampDate } from '@/components/book/PassportStamp'
 import { Progress } from '@/components/ui/progress'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
@@ -25,10 +26,12 @@ export function RunningHead({ right, className }: { right: string; className?: s
 export function ChapterHeading({
   chapter,
   progress,
+  stampedOn,
   className,
 }: {
   chapter: Chapter
   progress: ChapterProgress
+  stampedOn?: string
   className?: string
 }) {
   return (
@@ -61,6 +64,17 @@ export function ChapterHeading({
           aria-label={`${chapter.title} progress`}
         />
       </div>
+
+      {progress.percent === 100 && (
+        <div className="flex justify-end pt-2">
+          <ChapterStamp
+            title={chapter.title}
+            number={chapter.number}
+            date={stampDate(stampedOn)}
+            className="-mr-2 -rotate-[5deg]"
+          />
+        </div>
+      )}
     </header>
   )
 }

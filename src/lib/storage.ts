@@ -9,6 +9,8 @@ export type Persisted = {
   seenIntro: boolean
   /** The swipe hint retires as soon as a page has actually been turned. */
   hasFlipped: boolean
+  /** Chapter id to the day it was finished, which its stamp records. */
+  stamps: Record<string, string>
 }
 
 export type ThemePreference = 'light' | 'dark' | 'system'
@@ -19,6 +21,7 @@ const empty: Persisted = {
   theme: 'system',
   seenIntro: false,
   hasFlipped: false,
+  stamps: {},
 }
 
 export function load(): Persisted {
@@ -35,6 +38,8 @@ export function load(): Persisted {
           : 'system',
       seenIntro: parsed.seenIntro === true,
       hasFlipped: parsed.hasFlipped === true,
+      stamps:
+        parsed.stamps && typeof parsed.stamps === 'object' ? (parsed.stamps as Record<string, string>) : {},
     }
   } catch {
     // Private mode, disabled storage, corrupt JSON — the book still works, it
