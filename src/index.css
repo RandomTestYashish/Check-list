@@ -76,13 +76,13 @@
   /* Passport stock: an iridescent wash that stays clear through the middle so
      text keeps its contrast, plus fine guilloche waves printed over it. */
   --paper-wash:
-    radial-gradient(115% 75% at 6% 2%, oklch(0.92 0.07 160 / 0.2), transparent 58%),
-    radial-gradient(95% 65% at 96% 6%, oklch(0.95 0.08 105 / 0.18), transparent 60%),
-    radial-gradient(105% 75% at 98% 48%, oklch(0.9 0.06 335 / 0.17), transparent 58%),
-    radial-gradient(120% 85% at 4% 92%, oklch(0.9 0.05 285 / 0.15), transparent 62%),
+    radial-gradient(115% 75% at 6% 2%, oklch(0.92 0.07 160 / 0.1), transparent 58%),
+    radial-gradient(95% 65% at 96% 6%, oklch(0.95 0.08 105 / 0.09), transparent 60%),
+    radial-gradient(105% 75% at 98% 48%, oklch(0.9 0.06 335 / 0.085), transparent 58%),
+    radial-gradient(120% 85% at 4% 92%, oklch(0.9 0.05 285 / 0.075), transparent 62%),
     radial-gradient(85% 55% at 50% 46%, oklch(1 0 0 / 0.8), transparent 72%);
   --paper-waves: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='24'%3E%3Cg fill='none' stroke='%230f172a' stroke-opacity='0.55' stroke-width='0.6'%3E%3Cpath d='M0 6 Q 10 1 20 6 T 40 6 T 60 6 T 80 6 T 100 6 T 120 6 T 140 6 T 160 6'/%3E%3Cpath d='M0 12 Q 10 7 20 12 T 40 12 T 60 12 T 80 12 T 100 12 T 120 12 T 140 12 T 160 12'/%3E%3Cpath d='M0 18 Q 10 13 20 18 T 40 18 T 60 18 T 80 18 T 100 18 T 120 18 T 140 18 T 160 18'/%3E%3C/g%3E%3C/svg%3E");
-  --paper-wave-opacity: 0.16;
+  --paper-wave-opacity: 0.1;
   --paper-spine: oklch(0.2 0.01 286 / 0.09);
   --paper-spine-line: oklch(0.2 0.01 286 / 0.07);
   --stamp-blend: multiply;
@@ -117,12 +117,12 @@
   --brand-foreground: oklch(0.2 0.005 286);
 
   --paper-wash:
-    radial-gradient(115% 75% at 6% 2%, oklch(0.6 0.09 160 / 0.09), transparent 58%),
-    radial-gradient(95% 65% at 96% 6%, oklch(0.65 0.09 105 / 0.07), transparent 60%),
-    radial-gradient(105% 75% at 98% 48%, oklch(0.6 0.1 335 / 0.08), transparent 58%),
-    radial-gradient(120% 85% at 4% 92%, oklch(0.55 0.09 285 / 0.08), transparent 62%);
+    radial-gradient(115% 75% at 6% 2%, oklch(0.6 0.09 160 / 0.045), transparent 58%),
+    radial-gradient(95% 65% at 96% 6%, oklch(0.65 0.09 105 / 0.035), transparent 60%),
+    radial-gradient(105% 75% at 98% 48%, oklch(0.6 0.1 335 / 0.04), transparent 58%),
+    radial-gradient(120% 85% at 4% 92%, oklch(0.55 0.09 285 / 0.04), transparent 62%);
   --paper-waves: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.5' stroke-width='0.6'%3E%3Cpath d='M0 6 Q 10 1 20 6 T 40 6 T 60 6 T 80 6 T 100 6 T 120 6 T 140 6 T 160 6'/%3E%3Cpath d='M0 12 Q 10 7 20 12 T 40 12 T 60 12 T 80 12 T 100 12 T 120 12 T 140 12 T 160 12'/%3E%3Cpath d='M0 18 Q 10 13 20 18 T 40 18 T 60 18 T 80 18 T 100 18 T 120 18 T 140 18 T 160 18'/%3E%3C/g%3E%3C/svg%3E");
-  --paper-wave-opacity: 0.13;
+  --paper-wave-opacity: 0.08;
   --paper-spine: oklch(0 0 0 / 0.4);
   --paper-spine-line: oklch(1 0 0 / 0.06);
   --stamp-blend: screen;
