@@ -90,9 +90,6 @@ export function Spread({ book, onOpenContents }: { book: Book; onOpenContents: (
                     ? `Next: ${chapters[book.chapter + 1].number} ${chapters[book.chapter + 1].title}`
                     : 'End of the book'}
                 </p>
-                <p className="u-kicker u-numeral text-muted-foreground/70">
-                  {chapter.number} / {String(book.chapters.length).padStart(2, '0')}
-                </p>
               </div>
             </div>
 
