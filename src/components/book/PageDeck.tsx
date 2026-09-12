@@ -12,7 +12,6 @@ import {
 import { JourneyProgress } from '@/components/book/progress-marks'
 import { BookNav } from '@/components/book/BookNav'
 import { FirstRunCue, SwipeHint } from '@/components/book/hints'
-import { Separator } from '@/components/ui/separator'
 import { clamp } from '@/lib/utils'
 
 /** Length of a turn. Long enough to read as paper, short enough to stay out of the way. */
@@ -277,21 +276,21 @@ export function PageDeck({ book, onOpenContents }: { book: Book; onOpenContents:
             >
               <div className="leaf-print" aria-hidden />
               <div className="leaf-face">
-                <div className="book-page-inner mx-auto flex min-h-full max-w-[34rem] flex-col px-5 pt-7 pb-8 sm:px-7">
-                  <RunningHead right={`${chapter.number} / 10`} className="pb-6" />
+                <div className="book-page-inner mx-auto flex min-h-full max-w-[34rem] flex-col px-4 pt-4 pb-7 sm:px-6">
+                  <RunningHead right={`${chapter.number} / 10`} className="pb-3" />
                   <ChapterHeading
                     chapter={chapter}
                     progress={progress}
                     stampedOn={book.stamps[chapter.id]}
                   />
-                  <Separator className="mt-7 mb-3" />
+                  <div className="mt-3" />
                   <ChapterItems
                     chapter={chapter}
                     isChecked={book.isChecked}
                     toggle={book.toggle}
                   />
 
-                  <MarginNote className="mt-8">{chapter.tip}</MarginNote>
+                  <MarginNote className="mt-6">{chapter.tip}</MarginNote>
 
                   {index === last && (
                     <JourneyProgress
@@ -299,15 +298,16 @@ export function PageDeck({ book, onOpenContents }: { book: Book; onOpenContents:
                       total={book.totalItems}
                       percent={book.totalPercent}
                       progressByChapter={book.progressByChapter}
-                      className="mt-10 border-t pt-6"
+                      className="mt-8 border-t pt-5"
                       stamp
                     />
                   )}
 
-                  <PageFolio index={index} className="mt-auto pt-8" />
+                  <PageFolio index={index} className="mt-auto pt-6" />
                 </div>
                 <div className="leaf-shade" aria-hidden />
               </div>
+              <div className="leaf-gloss" aria-hidden />
             </article>
           )
         })}

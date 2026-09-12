@@ -1,10 +1,9 @@
 import type { Chapter } from '@/data/checklist'
-import { chapterUnit, chapters } from '@/data/checklist'
+import { chapters } from '@/data/checklist'
 import type { ChapterProgress } from '@/hooks/useBook'
 import { ChecklistRow } from '@/components/book/ChecklistRow'
 import { ChapterStamp, stampDate } from '@/components/book/PassportStamp'
 import { Progress } from '@/components/ui/progress'
-import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 
 export function RunningHead({ right, className }: { right: string; className?: string }) {
@@ -34,44 +33,52 @@ export function ChapterHeading({
   stampedOn?: string
   className?: string
 }) {
+  const complete = progress.percent === 100
+
   return (
-    <header className={cn('chapter-heading space-y-3', className)}>
-      <div className="flex items-center gap-4">
-        <span className="u-display u-numeral text-brand text-4xl leading-none">
-          {chapter.number}
-        </span>
-        <Separator className="flex-1" />
-      </div>
+    <header className={cn('chapter-heading', className)}>
+      {/* One compact card: number, chapter, count and progress in a single
+          band, so the list starts near the top of the page. */}
+      <div className="bg-card/70 rounded-2xl px-3 py-2.5 shadow-[var(--shadow-soft)] backdrop-blur-[2px]">
+        <div className="flex items-center gap-2.5">
+          <span className="u-numeral text-brand shrink-0 text-[0.8125rem] font-semibold">
+            {chapter.number}
+          </span>
+          <span className="shrink-0 text-sm leading-none" aria-hidden>
+            {chapter.emoji}
+          </span>
+          <h2 className="u-display min-w-0 flex-1 truncate text-[1.0625rem] leading-tight">
+            {chapter.title}
+          </h2>
+          <span
+            className={cn(
+              'u-numeral shrink-0 text-[0.6875rem] tabular-nums',
+              complete ? 'text-brand' : 'text-muted-foreground',
+            )}
+          >
+            {progress.done}/{progress.total}
+          </span>
+        </div>
 
-      <h2 className="u-display text-card-foreground flex items-baseline gap-2.5 text-[clamp(1.75rem,7.5vw,2.625rem)] leading-[1.08] tracking-[-0.01em]">
-        <span className="shrink-0 text-[0.62em]" aria-hidden>
-          {chapter.emoji}
-        </span>
-        {chapter.title}
-      </h2>
-
-      <p className="text-muted-foreground max-w-[38ch] text-sm leading-relaxed">
-        {chapter.subtitle}
-      </p>
-
-      <div className="flex items-center gap-3 pt-1">
-        <span className="u-kicker u-numeral bg-muted text-foreground shrink-0 rounded-full px-3 py-1.5">
-          {progress.done} / {progress.total} {chapterUnit[chapter.id] ?? 'done'}
-        </span>
         <Progress
           value={progress.percent}
           indicatorClassName="bg-brand"
           aria-label={`${chapter.title} progress`}
+          className="mt-2 h-[3px]"
         />
       </div>
 
-      {progress.percent === 100 && (
-        <div className="flex justify-end pt-2">
+      <p className="text-muted-foreground mt-2.5 px-1 text-[0.75rem] leading-snug">
+        {chapter.subtitle}
+      </p>
+
+      {complete && (
+        <div className="flex justify-end">
           <ChapterStamp
             title={chapter.title}
             number={chapter.number}
             date={stampDate(stampedOn)}
-            className="-mr-2 -rotate-[5deg]"
+            className="-mr-1 -mt-1 w-[7.5rem] -rotate-[5deg]"
           />
         </div>
       )}

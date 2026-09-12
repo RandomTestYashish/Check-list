@@ -16,6 +16,16 @@
 }
 
 @font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 900;
+  src: url('./assets/fonts/playfair-display-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
   font-family: 'Syne';
   font-style: normal;
   font-display: swap;
@@ -66,13 +76,13 @@
   /* Passport stock: an iridescent wash that stays clear through the middle so
      text keeps its contrast, plus fine guilloche waves printed over it. */
   --paper-wash:
-    radial-gradient(115% 75% at 6% 2%, oklch(0.92 0.07 160 / 0.5), transparent 58%),
-    radial-gradient(95% 65% at 96% 6%, oklch(0.95 0.08 105 / 0.45), transparent 60%),
-    radial-gradient(105% 75% at 98% 48%, oklch(0.9 0.06 335 / 0.42), transparent 58%),
-    radial-gradient(120% 85% at 4% 92%, oklch(0.9 0.05 285 / 0.38), transparent 62%),
-    radial-gradient(85% 55% at 50% 46%, oklch(1 0 0 / 0.7), transparent 72%);
+    radial-gradient(115% 75% at 6% 2%, oklch(0.92 0.07 160 / 0.2), transparent 58%),
+    radial-gradient(95% 65% at 96% 6%, oklch(0.95 0.08 105 / 0.18), transparent 60%),
+    radial-gradient(105% 75% at 98% 48%, oklch(0.9 0.06 335 / 0.17), transparent 58%),
+    radial-gradient(120% 85% at 4% 92%, oklch(0.9 0.05 285 / 0.15), transparent 62%),
+    radial-gradient(85% 55% at 50% 46%, oklch(1 0 0 / 0.8), transparent 72%);
   --paper-waves: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='24'%3E%3Cg fill='none' stroke='%230f172a' stroke-opacity='0.55' stroke-width='0.6'%3E%3Cpath d='M0 6 Q 10 1 20 6 T 40 6 T 60 6 T 80 6 T 100 6 T 120 6 T 140 6 T 160 6'/%3E%3Cpath d='M0 12 Q 10 7 20 12 T 40 12 T 60 12 T 80 12 T 100 12 T 120 12 T 140 12 T 160 12'/%3E%3Cpath d='M0 18 Q 10 13 20 18 T 40 18 T 60 18 T 80 18 T 100 18 T 120 18 T 140 18 T 160 18'/%3E%3C/g%3E%3C/svg%3E");
-  --paper-wave-opacity: 0.3;
+  --paper-wave-opacity: 0.16;
   --paper-spine: oklch(0.2 0.01 286 / 0.09);
   --paper-spine-line: oklch(0.2 0.01 286 / 0.07);
   --stamp-blend: multiply;
@@ -107,12 +117,12 @@
   --brand-foreground: oklch(0.2 0.005 286);
 
   --paper-wash:
-    radial-gradient(115% 75% at 6% 2%, oklch(0.6 0.09 160 / 0.14), transparent 58%),
-    radial-gradient(95% 65% at 96% 6%, oklch(0.65 0.09 105 / 0.11), transparent 60%),
-    radial-gradient(105% 75% at 98% 48%, oklch(0.6 0.1 335 / 0.13), transparent 58%),
-    radial-gradient(120% 85% at 4% 92%, oklch(0.55 0.09 285 / 0.13), transparent 62%);
+    radial-gradient(115% 75% at 6% 2%, oklch(0.6 0.09 160 / 0.09), transparent 58%),
+    radial-gradient(95% 65% at 96% 6%, oklch(0.65 0.09 105 / 0.07), transparent 60%),
+    radial-gradient(105% 75% at 98% 48%, oklch(0.6 0.1 335 / 0.08), transparent 58%),
+    radial-gradient(120% 85% at 4% 92%, oklch(0.55 0.09 285 / 0.08), transparent 62%);
   --paper-waves: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.5' stroke-width='0.6'%3E%3Cpath d='M0 6 Q 10 1 20 6 T 40 6 T 60 6 T 80 6 T 100 6 T 120 6 T 140 6 T 160 6'/%3E%3Cpath d='M0 12 Q 10 7 20 12 T 40 12 T 60 12 T 80 12 T 100 12 T 120 12 T 140 12 T 160 12'/%3E%3Cpath d='M0 18 Q 10 13 20 18 T 40 18 T 60 18 T 80 18 T 100 18 T 120 18 T 140 18 T 160 18'/%3E%3C/g%3E%3C/svg%3E");
-  --paper-wave-opacity: 0.22;
+  --paper-wave-opacity: 0.13;
   --paper-spine: oklch(0 0 0 / 0.4);
   --paper-spine-line: oklch(1 0 0 / 0.06);
   --stamp-blend: screen;
@@ -235,8 +245,8 @@
 .book-stage {
   --turn: 0;
   position: relative;
-  perspective: 1800px;
-  perspective-origin: 50% 42%;
+  perspective: 1250px;
+  perspective-origin: 50% 44%;
   overflow: hidden;
 }
 
@@ -277,8 +287,8 @@
      and the browser then never finds the scroller underneath it. */
   backface-visibility: hidden;
   transition:
-    transform 480ms cubic-bezier(0.33, 0.02, 0.15, 1),
-    opacity 480ms cubic-bezier(0.33, 0.02, 0.15, 1);
+    transform 560ms cubic-bezier(0.36, 0.05, 0.16, 1),
+    opacity 560ms cubic-bezier(0.36, 0.05, 0.16, 1);
   will-change: transform;
 }
 
@@ -387,6 +397,42 @@
   overscroll-behavior: contain;
   touch-action: pan-y;
   border-radius: inherit;
+}
+
+/* Light raking across the sheet as it lifts: bright along the spine where the
+   paper curves up, shadowed toward the free edge. It is what sells the bend. */
+.leaf-gloss {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  background: linear-gradient(
+    100deg,
+    oklch(1 0 0 / 0.5) 0%,
+    oklch(1 0 0 / 0.06) 24%,
+    oklch(0.2 0.01 286 / 0.1) 62%,
+    oklch(0.2 0.01 286 / 0.32) 100%
+  );
+}
+
+.dark .leaf-gloss {
+  background: linear-gradient(
+    100deg,
+    oklch(1 0 0 / 0.16) 0%,
+    oklch(1 0 0 / 0.02) 24%,
+    oklch(0 0 0 / 0.24) 62%,
+    oklch(0 0 0 / 0.5) 100%
+  );
+}
+
+.leaf[data-state='current'] .leaf-gloss {
+  opacity: calc(max(var(--turn), 0) * 1.1);
+}
+
+.leaf[data-state='previous'] .leaf-gloss {
+  opacity: calc(min(var(--turn), 0) * -1.1);
 }
 
 /* The page underneath sits in shadow until the leaf above it clears. */
