@@ -9,7 +9,7 @@ import { Spread } from '@/components/book/Spread'
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet'
 
 /** How long the cover takes to lift away. */
-const OPEN_MS = 420
+const OPEN_MS = 640
 
 export default function App() {
   const book = useBook()
@@ -53,7 +53,7 @@ export default function App() {
   )
 
   return (
-    <div className="bg-background flex h-full flex-col">
+    <div className="book-desk flex h-full flex-col">
       <div
         className={cn(
           'flex h-full min-h-0 flex-col',

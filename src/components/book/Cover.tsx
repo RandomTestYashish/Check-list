@@ -25,12 +25,10 @@ export function Cover({
           ? `Continue · ${resume.number} ${resume.title} · ${book.totalPercent}% ready`
           : 'Tap to open'
       }
+      opening={opening}
       onOpen={onOpen}
       label={started ? `Continue at ${resume.number} ${resume.title}` : 'Open the book'}
-      className={cn(
-        'ease-page transition-all duration-[420ms]',
-        opening ? 'pointer-events-none scale-[0.99] opacity-0' : 'opacity-100',
-      )}
+      className={cn(opening && 'pointer-events-none')}
     />
   )
 }

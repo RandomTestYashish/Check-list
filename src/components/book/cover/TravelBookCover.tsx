@@ -17,6 +17,7 @@ export function TravelBookCover({
   title,
   tagline,
   footnote,
+  opening = false,
   onOpen,
   label,
   className,
@@ -25,6 +26,8 @@ export function TravelBookCover({
   title: [string, string, string]
   tagline: string
   footnote?: string
+  /** True while the board is swinging open. */
+  opening?: boolean
   onOpen: () => void
   label: string
   className?: string
@@ -56,7 +59,7 @@ export function TravelBookCover({
   }, [])
 
   return (
-    <div className={cn('tb-page', className)}>
+    <div className={cn('tb-page', className)} data-opening={opening ? 'true' : undefined}>
       <button
         type="button"
         onClick={onOpen}

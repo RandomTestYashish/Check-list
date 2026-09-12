@@ -1,12 +1,11 @@
 import type { Chapter } from '@/data/checklist'
-import { chapters } from '@/data/checklist'
 import type { ChapterProgress } from '@/hooks/useBook'
 import { ChecklistRow } from '@/components/book/ChecklistRow'
 import { ChapterStamp, stampDate } from '@/components/book/PassportStamp'
 import { Progress } from '@/components/ui/progress'
 import { cn } from '@/lib/utils'
 
-export function RunningHead({ right, className }: { right: string; className?: string }) {
+export function RunningHead({ right, className }: { right?: string; className?: string }) {
   return (
     <div
       className={cn(
@@ -17,7 +16,7 @@ export function RunningHead({ right, className }: { right: string; className?: s
       <span className="truncate">
         Singapore<span className="hidden min-[360px]:inline"> · September 2026</span>
       </span>
-      <span className="u-numeral shrink-0">{right}</span>
+      {right && <span className="u-numeral shrink-0">{right}</span>}
     </div>
   )
 }
@@ -131,14 +130,3 @@ export function MarginNote({ children, className }: { children: string; classNam
   )
 }
 
-export function PageFolio({ index, className }: { index: number; className?: string }) {
-  return (
-    <div className={cn('u-kicker text-muted-foreground flex items-center gap-3', className)}>
-      <span className="u-numeral">
-        Page {chapters[index].number} of {String(chapters.length).padStart(2, '0')}
-      </span>
-      <span className="h-px flex-1 bg-border" />
-      <span aria-hidden>{chapters[index].emoji}</span>
-    </div>
-  )
-}

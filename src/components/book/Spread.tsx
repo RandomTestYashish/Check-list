@@ -63,7 +63,7 @@ export function Spread({ book, onOpenContents }: { book: Book; onOpenContents: (
             icon={<ChevronLeft className="size-5" />}
           />
 
-          <article className="book-paper text-card-foreground relative mx-auto flex min-h-0 w-full max-w-[72rem] overflow-hidden rounded-[1.75rem] shadow-[var(--shadow-lift)]">
+          <article className="bg-card text-card-foreground relative mx-auto flex min-h-0 w-full max-w-[72rem] overflow-hidden rounded-[1.75rem] shadow-[var(--shadow-lift)]">
             {/* the binding */}
             <div
               className="pointer-events-none absolute inset-y-0 left-[38%] z-10 w-10 -translate-x-1/2 bg-[linear-gradient(90deg,transparent,var(--border)_48%,transparent)]"

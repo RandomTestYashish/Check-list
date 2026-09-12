@@ -18,7 +18,7 @@ export function BookNav({
   const total = String(book.chapters.length).padStart(2, '0')
 
   return (
-    <nav className="shrink-0 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+    <nav className="shrink-0 px-3 pt-2.5 pb-[max(0.6rem,env(safe-area-inset-bottom))]">
       <PageEdges
         progressByChapter={book.progressByChapter}
         current={book.chapter}

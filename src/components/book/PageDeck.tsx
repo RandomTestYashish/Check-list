@@ -6,7 +6,6 @@ import {
   ChapterHeading,
   ChapterItems,
   MarginNote,
-  PageFolio,
   RunningHead,
 } from '@/components/book/page-parts'
 import { JourneyProgress } from '@/components/book/progress-marks'
@@ -231,7 +230,7 @@ export function PageDeck({ book, onOpenContents }: { book: Book; onOpenContents:
   const last = book.chapters.length - 1
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div className="flex min-h-0 flex-1 flex-col px-2 pt-2">
       <div
         ref={stageRef}
         className="book-stage min-h-0 flex-1"
@@ -274,10 +273,9 @@ export function PageDeck({ book, onOpenContents }: { book: Book; onOpenContents:
               aria-hidden={!isCurrent}
               aria-label={`Page ${chapter.number} of 10, ${chapter.title}`}
             >
-              <div className="leaf-print" aria-hidden />
               <div className="leaf-face">
                 <div className="book-page-inner mx-auto flex min-h-full max-w-[34rem] flex-col px-4 pt-4 pb-7 sm:px-6">
-                  <RunningHead right={`${chapter.number} / 10`} className="pb-3" />
+                  <RunningHead className="pb-3" />
                   <ChapterHeading
                     chapter={chapter}
                     progress={progress}
@@ -303,7 +301,6 @@ export function PageDeck({ book, onOpenContents }: { book: Book; onOpenContents:
                     />
                   )}
 
-                  <PageFolio index={index} className="mt-auto pt-6" />
                 </div>
                 <div className="leaf-shade" aria-hidden />
               </div>
